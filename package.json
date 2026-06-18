@@ -1,0 +1,9 @@
+{
+  "name": "piso-modular-3d",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sitio Piso Modular 3D con concierge IA (Groq) vía Vercel Edge Function",
+  "scripts": {
+    "dev": "vercel dev"
+  }
+}

@@ -1,0 +1,3383 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Piso Modular 3D – Pisos modulares de alta resistencia para talleres, piscinas, gimnasios, canchas deportivas y proyectos industriales. Soportan hasta 7 toneladas por m².">
+<meta name="keywords" content="piso modular, pisos industriales, pisos para talleres, piso para piscinas, pisos deportivos, Venezuela, instalación rápida">
+<title>Piso Modular 3D | Pisos de Alta Resistencia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #060912;
+  --bg-dark: #0A0E1A;
+  --bg-card: #0F1628;
+  --bg-glass: rgba(14, 22, 45, 0.85);
+  --blue-dark: #1E3A8A;
+  --blue-mid: #2563EB;
+  --blue-bright: #0EA5E9;
+  --blue-glow: #38BDF8;
+  --steel: #64748B;
+  --steel-light: #94A3B8;
+  --white: #F8FAFC;
+  --white-dim: rgba(248,250,252,0.7);
+  --accent: #0EA5E9;
+  --whatsapp: #25D366;
+  --grid-line: rgba(56, 189, 248, 0.06);
+  --font-display: 'Rajdhani', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+  --radius: 4px;
+  --radius-lg: 8px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--white);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--blue-mid); border-radius: 2px; }
+
+/* ─── CANVAS BACKGROUND ─── */
+#grid-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 0 clamp(1rem, 4vw, 3rem);
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(6, 9, 18, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+  transition: all 0.3s ease;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.nav-logo-icon {
+  width: 38px; height: 38px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.nav-logo-icon span {
+  background: var(--blue-bright);
+  border-radius: 1px;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.nav-logo-icon span:nth-child(even) { background: var(--blue-dark); opacity: 0.7; }
+.nav-logo:hover .nav-logo-icon span { background: var(--blue-glow); }
+
+.nav-logo-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+}
+.nav-logo-text small {
+  display: block;
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  color: var(--blue-bright);
+  font-family: var(--font-mono);
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: clamp(1rem, 2.5vw, 2rem);
+  align-items: center;
+}
+
+.nav-links a {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(148,163,184,0.8);
+  text-decoration: none;
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0; right: 0;
+  height: 1px;
+  background: var(--blue-bright);
+  transform: scaleX(0);
+  transition: transform 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-links a:hover::after { transform: scaleX(1); }
+
+.nav-cta {
+  background: var(--blue-bright);
+  color: var(--bg-deep) !important;
+  padding: 8px 20px;
+  border-radius: var(--radius);
+  font-weight: 700 !important;
+  transition: all 0.2s ease !important;
+}
+.nav-cta:hover { background: var(--blue-glow) !important; transform: translateY(-1px); }
+.nav-cta::after { display: none !important; }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  background: none;
+  border: none;
+}
+.hamburger span {
+  display: block;
+  width: 22px; height: 2px;
+  background: var(--white);
+  border-radius: 1px;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 70px; left: 0; right: 0;
+  background: rgba(6, 9, 18, 0.97);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(56,189,248,0.1);
+  padding: 1.5rem;
+  z-index: 99;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(148,163,184,0.8);
+  text-decoration: none;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(56,189,248,0.08);
+  transition: color 0.2s;
+}
+.mobile-menu a:hover { color: var(--blue-bright); }
+
+/* ─── BUTTONS ─── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  border: none;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.1);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.btn:hover::before { opacity: 1; }
+
+/* ─── COLOR CARD ANIMATIONS ─── */
+.color-card {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(56,189,248,0.08);
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  will-change: transform;
+}
+.color-card:hover {
+  border-color: rgba(14,165,233,0.55) !important;
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 10px 28px rgba(14,165,233,0.25), 0 0 0 1px rgba(14,165,233,0.2);
+}
+.color-card:active {
+  transform: translateY(0px) scale(0.96);
+  box-shadow: 0 2px 8px rgba(14,165,233,0.15);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+.color-card img {
+  width: 100%; height: 80px;
+  object-fit: cover; display: block;
+  transition: transform 0.4s ease;
+}
+.color-card:hover img { transform: scale(1.12); }
+.color-card .color-lbl {
+  position: absolute;
+  inset: 0 0 1.6rem 0;
+  background: rgba(6,9,18,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.color-card:hover .color-lbl { opacity: 1; }
+.color-card .color-name {
+  padding: 0.35rem 0.5rem;
+  background: var(--bg-card);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  text-align: center;
+  transition: color 0.25s ease;
+}
+.color-card:hover .color-name { color: var(--blue-bright); }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--blue-mid), var(--blue-bright));
+  color: var(--white);
+  box-shadow: 0 4px 20px rgba(14, 165, 233, 0.35);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(14, 165, 233, 0.5); }
+
+.btn-whatsapp {
+  background: var(--whatsapp);
+  color: var(--white);
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+}
+.btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37, 211, 102, 0.5); }
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: var(--blue-bright);
+}
+.btn-outline:hover { border-color: var(--blue-bright); background: rgba(14,165,233,0.08); transform: translateY(-2px); }
+
+.btn-ghost {
+  background: rgba(14,165,233,0.1);
+  color: var(--blue-bright);
+  border: 1px solid rgba(14,165,233,0.2);
+}
+
+/* ─── SECTION BASE ─── */
+section { position: relative; z-index: 1; }
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(148,163,184,0.7);
+  margin-bottom: 1rem;
+}
+.section-label::before {
+  content: '';
+  width: 24px; height: 1px;
+  background: linear-gradient(90deg, var(--blue-bright), transparent);
+}
+
+.section-title {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1.9rem, 4.5vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+  color: #fff;
+}
+
+.section-subtitle {
+  font-size: clamp(0.88rem, 1.6vw, 1rem);
+  color: rgba(148,163,184,0.7);
+  max-width: 560px;
+  line-height: 1.75;
+  font-weight: 400;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 4vw, 3rem);
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ─── 1. HERO ─── */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: 70px;
+}
+
+.hero-video-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-video-wrap video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 1;
+  filter: brightness(0.55);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(6,9,18,0.95) 0%, rgba(30,58,138,0.4) 50%, rgba(6,9,18,0.95) 100%);
+  z-index: 1;
+}
+
+.hero-overlay-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image:
+    linear-gradient(rgba(56,189,248,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56,189,248,0.04) 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 3rem 1rem;
+  max-width: 950px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(14, 165, 233, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 100px;
+  padding: 5px 18px 5px 10px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(148,163,184,0.85);
+  margin-bottom: 2rem;
+}
+.hero-badge-dot {
+  width: 5px; height: 5px;
+  background: var(--blue-bright);
+  border-radius: 50%;
+  animation: pulse-dot 2.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(14,165,233,0.4); }
+  50% { opacity: 0.8; transform: scale(1.2); box-shadow: 0 0 0 4px rgba(14,165,233,0.1); }
+}
+
+.hero-title {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(2.6rem, 7vw, 5.8rem);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.8rem;
+  color: #fff;
+}
+
+.hero-title .line-thin {
+  display: block;
+  font-weight: 300;
+  font-size: 0.55em;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 0.4rem;
+}
+
+.hero-title .line-main {
+  display: block;
+  font-weight: 800;
+  color: #fff;
+  line-height: 0.95;
+}
+
+.hero-title .line-accent {
+  display: block;
+  font-weight: 800;
+  background: linear-gradient(90deg, #0EA5E9 0%, #38BDF8 50%, #7DD3FC 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.05;
+}
+
+.hero-title .line-light {
+  display: block;
+  font-weight: 300;
+  font-size: 0.72em;
+  letter-spacing: 0.01em;
+  color: rgba(255,255,255,0.6);
+  margin-top: 0.2rem;
+}
+
+.hero-sub {
+  font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+  color: rgba(148,163,184,0.75);
+  max-width: 560px;
+  margin: 0 auto 2.8rem;
+  line-height: 1.75;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.hero-sub strong { color: rgba(255,255,255,0.9); font-weight: 600; }
+
+.hero-buttons {
+  display: flex;
+  gap: 0.85rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-specs {
+  display: flex;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  justify-content: center;
+  margin-top: 4rem;
+  flex-wrap: wrap;
+  padding-top: 2.5rem;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.hero-spec {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+.hero-spec-val {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.hero-spec-lbl {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(100,116,139,0.8);
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.hero-scroll span {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+.scroll-line {
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--blue-bright), transparent);
+  animation: scroll-anim 2s ease-in-out infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(6px); }
+}
+
+@keyframes scroll-anim {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.2); }
+}
+
+/* ─── 2. ESTADÍSTICAS ─── */
+#stats {
+  padding: 5rem 0;
+  background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-card) 100%);
+  border-top: 1px solid rgba(56,189,248,0.1);
+  border-bottom: 1px solid rgba(56,189,248,0.1);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  position: relative;
+  transition: background 0.3s;
+}
+.stat-item:hover { background: rgba(14, 165, 233, 0.04); }
+
+.stat-item + .stat-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 20%; bottom: 20%;
+  width: 1px;
+  background: rgba(56,189,248,0.1);
+}
+
+.stat-number {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+.stat-suffix {
+  font-size: 0.5em;
+  color: var(--blue-bright);
+  align-self: flex-start;
+  padding-top: 0.3em;
+  font-weight: 700;
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(100,116,139,0.8);
+  margin-top: 0.5rem;
+}
+
+.stat-line {
+  width: 24px; height: 1px;
+  background: linear-gradient(90deg, var(--blue-bright), transparent);
+  margin: 0.75rem auto 0;
+}
+
+/* ─── 3. BENEFICIOS ─── */
+#benefits {
+  padding: clamp(4rem, 8vw, 7rem) 0;
+  background: linear-gradient(180deg, rgba(6,9,18,0.93), rgba(6,9,18,0.96)), url('https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto/v1781814019/IMG_7884_invliu.jpg') center/cover no-repeat;
+}
+
+.benefits-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+
+.benefits-visual {
+  position: relative;
+  aspect-ratio: 1;
+  max-width: 480px;
+}
+
+.module-grid-visual {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 4px;
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.module-cell {
+  background: var(--bg-card);
+  border-radius: 3px;
+  border: 1px solid rgba(56,189,248,0.12);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.module-cell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(14,165,233,0.15), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.module-cell:hover::after { opacity: 1; }
+.module-cell:hover { border-color: rgba(14, 165, 233, 0.5); transform: translateY(-2px); }
+
+.module-cell.active {
+  background: linear-gradient(135deg, rgba(37,99,235,0.5), rgba(14,165,233,0.3));
+  border-color: var(--blue-bright);
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.4);
+}
+
+.module-cell .dot-grid {
+  position: absolute;
+  inset: 4px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 2px;
+}
+.module-cell .dot {
+  background: rgba(56,189,248,0.2);
+  border-radius: 50%;
+}
+.module-cell.active .dot { background: rgba(56,189,248,0.6); }
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5px;
+  background: rgba(56,189,248,0.06);
+  border: 1px solid rgba(56,189,248,0.06);
+}
+
+.benefit-card {
+  background: var(--bg-card);
+  padding: 2rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.benefit-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--blue-bright), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.benefit-card:hover { background: rgba(14, 22, 45, 0.95); }
+.benefit-card:hover::before { opacity: 1; }
+
+.benefit-icon {
+  width: 48px; height: 48px;
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+.benefit-card:hover .benefit-icon {
+  background: rgba(14, 165, 233, 0.2);
+  border-color: var(--blue-bright);
+  transform: scale(1.05);
+}
+
+.benefit-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+  color: var(--white);
+}
+
+.benefit-desc {
+  font-size: 0.82rem;
+  color: rgba(148,163,184,0.7);
+  line-height: 1.65;
+}
+
+/* ─── 4. SIMULADOR / CALCULADORA ─── */
+#simulator {
+  padding: clamp(4rem, 8vw, 7rem) 0;
+  background: linear-gradient(180deg, rgba(10,14,26,0.93), rgba(10,14,26,0.96)), url('https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto/v1781814013/IMG_7882_r2jvkv.jpg') center/cover no-repeat;
+  position: relative;
+  overflow: hidden;
+}
+
+#simulator::before {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(37,99,235,0.12), transparent 70%);
+  pointer-events: none;
+}
+
+.simulator-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.simulator-form {
+  background: var(--bg-card);
+  border: 1px solid rgba(56,189,248,0.1);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+}
+
+.sim-field {
+  margin-bottom: 1.5rem;
+}
+
+.sim-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--blue-bright);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.sim-input, .sim-select {
+  width: 100%;
+  background: rgba(6, 9, 18, 0.8);
+  border: 1px solid rgba(56,189,248,0.15);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+  appearance: none;
+}
+.sim-input:focus, .sim-select:focus { border-color: var(--blue-bright); }
+.sim-select { cursor: pointer; }
+
+.sim-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.simulator-results {
+  background: var(--bg-card);
+  border: 1px solid rgba(56,189,248,0.15);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.simulator-results::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue-mid), var(--blue-bright));
+}
+
+.sim-results-header {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(148,163,184,0.6);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(56,189,248,0.08);
+}
+
+.sim-result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(56,189,248,0.06);
+}
+.sim-result-row:last-of-type { border-bottom: none; }
+
+.sim-result-label {
+  font-size: 0.82rem;
+  color: var(--steel-light);
+}
+
+.sim-result-val {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.sim-result-val.big {
+  font-size: 1.4rem;
+  color: var(--blue-bright);
+  letter-spacing: -0.02em;
+}
+
+.sim-disclaimer {
+  font-size: 0.72rem;
+  color: var(--steel);
+  margin-top: 1.5rem;
+  line-height: 1.5;
+}
+
+/* ─── 5. APLICACIONES ─── */
+#applications {
+  padding: clamp(4rem, 8vw, 7rem) 0;
+  background: linear-gradient(180deg, rgba(6,9,18,0.93), rgba(6,9,18,0.96)), url('https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto/v1781814019/IMG_7884_invliu.jpg') center/cover no-repeat;
+}
+
+.apps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.app-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(56,189,248,0.08);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all 0.35s ease;
+  text-decoration: none;
+}
+.app-card:hover { border-color: rgba(14,165,233,0.4); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(14, 165, 233, 0.12); }
+
+.app-card-img {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.app-card-img-bg {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  filter: grayscale(0.3) brightness(0.6);
+}
+
+.app-card:hover .app-card-img-bg { transform: scale(1.05); }
+
+.app-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(6,9,18,0.95) 0%, transparent 50%);
+}
+
+.app-card-cat {
+  position: absolute;
+  top: 1rem; left: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--bg-deep);
+  background: var(--blue-bright);
+  padding: 3px 10px;
+  border-radius: 1px;
+}
+
+.app-card-body { padding: 1.5rem; }
+
+.app-card-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  margin-bottom: 0.75rem;
+}
+
+.app-card-features {
+  list-style: none;
+  margin-bottom: 1.25rem;
+}
+.app-card-features li {
+  font-size: 0.78rem;
+  color: var(--steel-light);
+  padding: 3px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.app-card-features li::before {
+  content: '';
+  width: 4px; height: 4px;
+  background: var(--blue-bright);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ─── 6. COMPARATIVA ─── */
+#comparison {
+  padding: clamp(4rem, 8vw, 7rem) 0;
+  background: linear-gradient(180deg, rgba(10,14,26,0.93), rgba(10,14,26,0.96)), url('https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto/v1781814779/IMG_7895_b3grnl.jpg') center/cover no-repeat;
+}
+
+.comparison-table-wrap {
+  overflow-x: auto;
+  margin-top: 3rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(56,189,248,0.12);
+}
+
+table.comp-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.comp-table th {
+  padding: 1.25rem 1.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: left;
+  background: var(--bg-card);
+}
+.comp-table th.highlight {
+  background: linear-gradient(135deg, rgba(37,99,235,0.3), rgba(14,165,233,0.2));
+  color: var(--blue-bright);
+  border-bottom: 2px solid var(--blue-bright);
+}
+.comp-table th.dull { color: var(--steel); border-bottom: 2px solid transparent; }
+
+.comp-table td {
+  padding: 1rem 1.5rem;
+  font-size: 0.88rem;
+  color: rgba(148,163,184,0.75);
+  border-top: 1px solid rgba(56,189,248,0.05);
+}
+.comp-table tr:hover td { background: rgba(14,165,233,0.03); }
+.comp-table td:first-child {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0em;
+  color: var(--white);
+  white-space: nowrap;
+}
+.comp-table td.plus {
+  color: var(--blue-bright);
+  font-weight: 600;
+}
+.comp-table td.minus { color: var(--steel); }
+.comp-icon { font-size: 1.1rem; }
+
+/* ─── 7. GALERÍA ─── */
+#gallery {
+  padding: clamp(4rem, 8vw, 7rem) 0;
+  background: linear-gradient(180deg, rgba(6,9,18,0.93), rgba(6,9,18,0.96)), url('https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto/v1781814022/IMG_7883_g4ddni.jpg') center/cover no-repeat;
+}
+
+.gallery-filters {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin: 2rem 0;
+}
+
+.filter-btn {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  background: var(--bg-card);
+  border: 1px solid rgba(56,189,248,0.12);
+  color: var(--steel-light);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-btn:hover, .filter-btn.active {
+  background: rgba(14,165,233,0.15);
+  border-color: var(--blue-bright);
+  color: var(--blue-bright);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.gallery-item {
+  aspect-ratio: 4/3;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid rgba(56,189,248,0.08);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  filter: grayscale(0.3) brightness(0.7);
+}
+.gallery-item:hover {
+  border-color: rgba(14,165,233,0.4);
+  transform: scale(1.02);
+  filter: grayscale(0) brightness(0.85);
+}
+
+.gallery-item-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(6,9,18,0.95) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.25rem;
+}
+.gallery-item:hover .gallery-item-overlay { opacity: 1; }
+
+.gallery-item-info { pointer-events: none; }
+.gallery-item-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.25rem;
+}
+.gallery-item-loc {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  color: var(--blue-bright);
+}
+
+/* Lightbox */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(6,9,18,0.97);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+.lightbox.open { display: flex; }
+
+.lightbox-content {
+  max-width: 800px;
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid rgba(56,189,248,0.2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  animation: lightbox-in 0.3s ease;
+}
+@keyframes lightbox-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.lightbox-img-area {
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8rem;
+  background: var(--bg-dark);
+  filter: brightness(0.7);
+}
+
+.lightbox-body { padding: 2rem; }
+.lightbox-body h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+.lightbox-body p { font-size: 0.85rem; color: var(--steel-light); line-height: 1.6; }
+.lightbox-close {
+  position: absolute;
+  top: 2rem; right: 2rem;
+  background: rgba(14,165,233,0.1);
+  border: 1px solid rgba(14,165,233,0.2);
+  color: var(--white);
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.2s;
+}
+.lightbox-close:hover { background: rgba(14,165,233,0.25); }
+
+/* ─── 8. TESTIMONIOS ─── */
+#testimonials {
+  padding: clamp(4rem, 8vw, 7rem) 0;
+  background: var(--bg-dark);
+  overflow: hidden;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.testimonial-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(56,189,248,0.08);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+.testimonial-card:hover {
+  border-color: rgba(14,165,233,0.25);
+  transform: translateY(-3px);
+}
+
+.testimonial-quote {
+  font-size: 2.5rem;
+  color: var(--blue-mid);
+  line-height: 1;
+  margin-bottom: 1rem;
+  font-family: Georgia, serif;
+}
+
+.testimonial-text {
+  font-size: 0.88rem;
+  color: var(--steel-light);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.testimonial-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-mid), var(--blue-bright));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--bg-deep);
+  flex-shrink: 0;
+}
+
+.testimonial-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.testimonial-role {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  color: var(--blue-bright);
+  text-transform: uppercase;
+}
+
+.testimonial-stars {
+  position: absolute;
+  top: 1.5rem; right: 1.5rem;
+  color: #FBBF24;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+}
+
+/* ─── 9. DISTRIBUIDORES ─── */
+#distributors {
+  padding: clamp(4rem, 8vw, 7rem) 0;
+  background: linear-gradient(180deg, rgba(6,9,18,0.93), rgba(6,9,18,0.96)), url('https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto/v1781814014/IMG_7879_u4i9hi.jpg') center/cover no-repeat;
+  position: relative;
+  overflow: hidden;
+}
+
+#distributors::before {
+  content: '';
+  position: absolute;
+  bottom: -150px; left: -150px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(37,99,235,0.1), transparent 70%);
+  pointer-events: none;
+}
+
+.distributors-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.dist-benefits {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.dist-benefit {
+  background: var(--bg-card);
+  border: 1px solid rgba(56,189,248,0.08);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+.dist-benefit:hover {
+  border-color: rgba(14,165,233,0.3);
+  background: rgba(14, 22, 45, 0.9);
+}
+
+.dist-benefit-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+.dist-benefit-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.4rem;
+  color: var(--white);
+}
+.dist-benefit-desc {
+  font-size: 0.78rem;
+  color: var(--steel-light);
+  line-height: 1.5;
+}
+
+.dist-form {
+  background: var(--bg-card);
+  border: 1px solid rgba(56,189,248,0.12);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.dist-form::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue-mid), var(--blue-bright));
+}
+
+.form-row { margin-bottom: 1.25rem; }
+.form-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--blue-bright);
+  margin-bottom: 0.5rem;
+}
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  background: rgba(6, 9, 18, 0.8);
+  border: 1px solid rgba(56,189,248,0.12);
+  border-radius: var(--radius);
+  padding: 11px 14px;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.2s;
+  appearance: none;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--blue-bright); }
+.form-textarea { min-height: 100px; resize: vertical; }
+
+/* ─── 10. CONCIERGE IA (flotante) ─── */
+#ai-concierge-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 150;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.ai-btn-label {
+  background: var(--bg-card);
+  border: 1px solid rgba(56,189,248,0.2);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--blue-bright);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: all 0.3s ease;
+}
+#ai-concierge-btn:hover .ai-btn-label { opacity: 1; transform: translateX(0); }
+
+.ai-btn-circle {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-mid), var(--blue-bright));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(14,165,233,0.5);
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  animation: ai-pulse 3s ease-in-out infinite;
+}
+
+@keyframes ai-pulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(14,165,233,0.5); }
+  50% { box-shadow: 0 4px 30px rgba(14,165,233,0.8), 0 0 0 8px rgba(14,165,233,0.15); }
+}
+
+.ai-btn-circle:hover { transform: scale(1.08); }
+
+/* Chat window */
+#ai-chat-window {
+  position: fixed;
+  bottom: 6.5rem;
+  right: 2rem;
+  width: min(400px, calc(100vw - 2rem));
+  max-height: 600px;
+  background: var(--bg-card);
+  border: 1px solid rgba(56,189,248,0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(56,189,248,0.05);
+  z-index: 149;
+  display: none;
+  flex-direction: column;
+  animation: chat-in 0.3s ease;
+}
+#ai-chat-window.open { display: flex; }
+@keyframes chat-in {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.chat-header {
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, rgba(37,99,235,0.4), rgba(14,165,233,0.2));
+  border-bottom: 1px solid rgba(56,189,248,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chat-header-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.chat-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-mid), var(--blue-bright));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.chat-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.chat-status {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  color: #22C55E;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.chat-status::before {
+  content: '';
+  width: 5px; height: 5px;
+  background: #22C55E;
+  border-radius: 50%;
+  animation: blink 2s infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.chat-close {
+  background: none;
+  border: none;
+  color: var(--steel-light);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.2s;
+}
+.chat-close:hover { color: var(--white); }
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 280px;
+  max-height: 380px;
+}
+.chat-messages::-webkit-scrollbar { width: 3px; }
+.chat-messages::-webkit-scrollbar-thumb { background: var(--blue-mid); }
+
+.chat-msg {
+  max-width: 85%;
+  animation: msg-in 0.3s ease;
+}
+@keyframes msg-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-msg.bot { align-self: flex-start; }
+.chat-msg.user { align-self: flex-end; }
+
+.chat-bubble {
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.chat-msg.bot .chat-bubble {
+  background: rgba(37,99,235,0.18);
+  border: 1px solid rgba(56,189,248,0.15);
+  color: var(--white);
+  border-radius: 2px 10px 10px 10px;
+}
+
+.chat-msg.user .chat-bubble {
+  background: linear-gradient(135deg, rgba(37,99,235,0.5), rgba(14,165,233,0.4));
+  color: var(--white);
+  border-radius: 10px 2px 10px 10px;
+}
+
+.chat-quick-opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+.chat-opt {
+  font-size: 0.72rem;
+  padding: 5px 10px;
+  background: rgba(14,165,233,0.1);
+  border: 1px solid rgba(14,165,233,0.25);
+  border-radius: 20px;
+  color: var(--blue-bright);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.chat-opt:hover { background: rgba(14,165,233,0.25); }
+
+.chat-typing {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 0.7rem 1rem;
+}
+.chat-typing span {
+  width: 6px; height: 6px;
+  background: var(--blue-bright);
+  border-radius: 50%;
+  animation: typing-dot 1.2s ease-in-out infinite;
+}
+.chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+.chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typing-dot {
+  0%, 100% { opacity: 0.3; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-4px); }
+}
+
+.chat-input-area {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid rgba(56,189,248,0.08);
+  display: flex;
+  gap: 0.5rem;
+  background: rgba(6, 9, 18, 0.5);
+}
+.chat-input {
+  flex: 1;
+  background: rgba(56,189,248,0.06);
+  border: 1px solid rgba(56,189,248,0.12);
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.chat-input:focus { border-color: var(--blue-bright); }
+.chat-send {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--blue-mid), var(--blue-bright));
+  border: none;
+  border-radius: 6px;
+  color: var(--white);
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.chat-send:hover { transform: scale(1.05); }
+
+
+
+/* ─── 11. CTA FINAL ─── */
+#final-cta {
+  padding: clamp(5rem, 10vw, 8rem) 0;
+  background: var(--bg-dark);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#final-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(37,99,235,0.2), transparent),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(14,165,233,0.05), transparent);
+}
+
+.cta-glow {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(2.2rem, 5.5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.0;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.cta-sub {
+  font-size: clamp(0.88rem, 1.6vw, 1rem);
+  color: rgba(148,163,184,0.7);
+  max-width: 520px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.75;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--bg-deep);
+  border-top: 1px solid rgba(56,189,248,0.08);
+  padding: 3rem 0 2rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.footer-brand p {
+  font-size: 0.82rem;
+  color: var(--steel);
+  line-height: 1.7;
+  margin-top: 1rem;
+  max-width: 260px;
+}
+
+.footer-col h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(148,163,184,0.5);
+  margin-bottom: 1rem;
+}
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 0.5rem; }
+.footer-col ul li a {
+  font-size: 0.82rem;
+  color: var(--steel);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-col ul li a:hover { color: var(--white); }
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(56,189,248,0.06);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-bottom p {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  color: var(--steel);
+  text-transform: uppercase;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .benefits-intro { grid-template-columns: 1fr; }
+  .benefits-visual { display: none; }
+  .simulator-wrap { grid-template-columns: 1fr; }
+  .distributors-wrap { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+  /* NAV */
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .nav-logo img { height: 38px !important; }
+  nav { height: 60px; padding: 0 1rem; }
+
+  /* HERO */
+  .hero-content { padding: 2rem 1rem; }
+  .hero-title { font-size: clamp(2rem, 9vw, 3rem); }
+  .hero-title .line-thin { font-size: 0.6em; letter-spacing: 0.14em; }
+  .hero-title .line-light { font-size: 0.65em; }
+  .hero-specs { gap: 1.25rem; flex-wrap: wrap; padding-top: 1.5rem; margin-top: 2rem; }
+  .hero-spec-val { font-size: 1.3rem; }
+  .hero-buttons { gap: 0.75rem; }
+  .hero-buttons .btn { padding: 12px 20px; font-size: 0.75rem; }
+  .hero-badge { font-size: 0.55rem; letter-spacing: 0.15em; padding: 4px 12px 4px 8px; }
+  .hero-scroll { display: none; }
+  #hero { padding-top: 60px; }
+
+  /* STATS */
+  .stat-item + .stat-item::before { display: none; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-number { font-size: 2rem; }
+
+  /* ABOUT */
+  #about .about-grid { grid-template-columns: 1fr !important; }
+  #about .about-numbers-grid { grid-template-columns: 1fr 1fr !important; gap: 0.75rem !important; }
+  .about-hero-grid { grid-template-columns: 1fr !important; }
+  .about-hero-grid > div:last-child { order: -1; }
+
+  /* BENEFITS */
+  .benefits-intro { grid-template-columns: 1fr; }
+  .benefits-visual { display: none; }
+  .benefits-grid { grid-template-columns: 1fr 1fr; }
+  .benefit-card { padding: 1.25rem; }
+
+  /* SIMULATOR */
+  .simulator-wrap { grid-template-columns: 1fr; }
+  .simulator-form { padding: 1.5rem; }
+  .simulator-results { padding: 1.5rem; }
+  .sim-row { grid-template-columns: 1fr 1fr; }
+
+  /* APPS */
+  .apps-grid { grid-template-columns: 1fr 1fr; }
+  .app-card-img { height: 160px; }
+
+  /* COMPARISON */
+  .comparison-table-wrap { font-size: 0.82rem; }
+  .comp-table th, .comp-table td { padding: 0.75rem 1rem; }
+
+  /* GALLERY */
+  .gallery-grid { grid-template-columns: 1fr 1fr; }
+  .gallery-filters { gap: 0.35rem; }
+  .filter-btn { font-size: 0.6rem; padding: 6px 12px; }
+
+  /* TESTIMONIALS */
+  .testimonials-grid { grid-template-columns: 1fr; }
+
+  /* DISTRIBUTORS */
+  .distributors-wrap { grid-template-columns: 1fr; }
+  .dist-benefits { grid-template-columns: 1fr 1fr; }
+  .dist-form { padding: 1.5rem; }
+
+  /* CTA FINAL */
+  .cta-glow { font-size: clamp(1.8rem, 7vw, 2.8rem); }
+  .cta-buttons { flex-direction: column; align-items: center; }
+  .cta-buttons .btn { width: 100%; justify-content: center; max-width: 320px; }
+
+  /* FOOTER */
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; text-align: center; gap: 0.5rem; }
+
+  /* CHAT */
+  #ai-chat-window { right: 0.75rem; left: 0.75rem; width: auto; bottom: 5.5rem; }
+  #ai-concierge-btn { bottom: 1.25rem; right: 1.25rem; }
+  .mobile-menu { top: 60px; }
+
+  /* SECTION GLOBAL */
+  .section-title { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+  .container { padding: 0 1rem; }
+}
+
+@media (max-width: 480px) {
+  /* HERO */
+  .hero-buttons { flex-direction: column; align-items: stretch; }
+  .hero-buttons .btn { justify-content: center; }
+  .hero-specs { gap: 1rem; }
+  .hero-spec-val { font-size: 1.15rem; }
+
+  /* STATS */
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+
+  /* BENEFITS */
+  .benefits-grid { grid-template-columns: 1fr; }
+
+  /* SIMULATOR */
+  .sim-row { grid-template-columns: 1fr; }
+  .simulator-form, .simulator-results { padding: 1.25rem; }
+
+  /* APPS */
+  .apps-grid { grid-template-columns: 1fr; }
+
+  /* GALLERY */
+  .gallery-grid { grid-template-columns: 1fr; }
+
+  /* DISTRIBUTORS */
+  .dist-benefits { grid-template-columns: 1fr; }
+
+  /* FOOTER */
+  .footer-grid { grid-template-columns: 1fr; }
+
+  /* ABOUT */
+  #about .about-numbers-grid { grid-template-columns: 1fr 1fr !important; }
+
+  /* BUTTONS global */
+  .btn { padding: 12px 20px; font-size: 0.75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- CANVAS BACKGROUND -->
+<canvas id="grid-canvas"></canvas>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- NAV -->
+<!-- ══════════════════════════════════════════════ -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <img src="https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,h_50/v1781812406/IMG_7880_qa4e04_h9kpdg.png" alt="Piso Modular 3D" style="height:46px; width:auto; display:block;">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#benefits">Beneficios</a></li>
+    <li><a href="#applications">Aplicaciones</a></li>
+    <li><a href="#gallery">Proyectos</a></li>
+    <li><a href="#distributors">Distribuidores</a></li>
+    <li><a href="https://wa.me/584140000000?text=Hola,%20quiero%20información%20sobre%20pisos%20modulares" target="_blank" class="nav-cta">Cotizar</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#benefits" onclick="toggleMenu()">Beneficios</a>
+  <a href="#simulator" onclick="toggleMenu()">Calculadora</a>
+  <a href="#applications" onclick="toggleMenu()">Aplicaciones</a>
+  <a href="#gallery" onclick="toggleMenu()">Proyectos</a>
+  <a href="#testimonials" onclick="toggleMenu()">Testimonios</a>
+  <a href="#distributors" onclick="toggleMenu()">Distribuidores</a>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- 1. HERO -->
+<!-- ══════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-video-wrap">
+    <video autoplay muted loop playsinline
+      src="https://res.cloudinary.com/dpiavcukm/video/upload/f_auto,q_auto,ac_none/v1781814786/insta_video_76229_sgthha.mp4"
+      onerror="this.style.display='none'"
+    ></video>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Fabricante en Venezuela · Distribución Nacional e Internacional
+    </div>
+    <h1 class="hero-title">
+      <span class="line-thin">Ingeniería en pisos</span>
+      <span class="line-main">Pisos Modulares</span>
+      <span class="line-accent">de Alta Resistencia</span>
+      <span class="line-light">para proyectos exigentes</span>
+    </h1>
+    <p class="hero-sub">
+      Soportan hasta <strong>7 toneladas por metro cuadrado</strong>. Instalación rápida, drenaje eficiente y máxima durabilidad para talleres, piscinas, canchas y espacios industriales.
+    </p>
+    <div class="hero-buttons">
+      <a href="#simulator" class="btn btn-primary">
+        <span>⚡</span> Solicitar Cotización
+      </a>
+      <a href="https://wa.me/584140000000?text=Hola,%20quiero%20cotizar%20pisos%20modulares%20para%20mi%20proyecto" target="_blank" class="btn btn-whatsapp">
+        <span>💬</span> Hablar por WhatsApp
+      </a>
+    </div>
+    <div class="hero-specs">
+      <div class="hero-spec">
+        <span class="hero-spec-val">7T</span>
+        <span class="hero-spec-lbl">por metro²</span>
+      </div>
+      <div class="hero-spec">
+        <span class="hero-spec-val">100%</span>
+        <span class="hero-spec-lbl">Drenaje Libre</span>
+      </div>
+      <div class="hero-spec">
+        <span class="hero-spec-val">&lt;1h</span>
+        <span class="hero-spec-lbl">Instalación/m²</span>
+      </div>
+      <div class="hero-spec">
+        <span class="hero-spec-val">UV+</span>
+        <span class="hero-spec-lbl">Protección Solar</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- 2. ESTADÍSTICAS -->
+<!-- ══════════════════════════════════════════════ -->
+<section id="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item fade-in">
+        <div class="stat-number">
+          <span class="counter" data-target="7">0</span>
+          <span class="stat-suffix">T</span>
+        </div>
+        <div class="stat-label">Toneladas por m²</div>
+        <div class="stat-line"></div>
+      </div>
+      <div class="stat-item fade-in" style="transition-delay:0.1s">
+        <div class="stat-number">
+          <span class="counter" data-target="350">0</span>
+          <span class="stat-suffix">+</span>
+        </div>
+        <div class="stat-label">Proyectos Realizados</div>
+        <div class="stat-line"></div>
+      </div>
+      <div class="stat-item fade-in" style="transition-delay:0.2s">
+        <div class="stat-number">
+          <span class="counter" data-target="200">0</span>
+          <span class="stat-suffix">+</span>
+        </div>
+        <div class="stat-label">Clientes Satisfechos</div>
+        <div class="stat-line"></div>
+      </div>
+      <div class="stat-item fade-in" style="transition-delay:0.3s">
+        <div class="stat-number">
+          <span class="counter" data-target="8">0</span>
+          <span class="stat-suffix"></span>
+        </div>
+        <div class="stat-label">Años de Experiencia</div>
+        <div class="stat-line"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- QUIÉNES SOMOS -->
+<!-- ══════════════════════════════════════════════ -->
+<section id="about" style="padding: clamp(4rem, 8vw, 7rem) 0; background: linear-gradient(180deg, rgba(10,14,26,0.93), rgba(10,14,26,0.96)), url('https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto/v1781814022/IMG_7883_g4ddni.jpg') center/cover no-repeat; position:relative; overflow:hidden;">
+  <div style="position:absolute; top:-200px; right:-200px; width:600px; height:600px; background:radial-gradient(circle, rgba(14,165,233,0.07), transparent 70%); pointer-events:none;"></div>
+  <div style="position:absolute; bottom:-100px; left:-100px; width:400px; height:400px; background:radial-gradient(circle, rgba(37,99,235,0.05), transparent 70%); pointer-events:none;"></div>
+  <div class="container">
+
+    <!-- Grid encabezado + video celular -->
+    <div style="display:grid; grid-template-columns:1fr 300px; gap:3rem; align-items:center; margin-bottom:4rem;" class="fade-in about-hero-grid">
+
+      <!-- Izquierda: texto -->
+      <div>
+        <div class="section-label">Quiénes Somos</div>
+        <h2 class="section-title">Fabricantes venezolanos<br><span style="background:linear-gradient(90deg,#0EA5E9,#38BDF8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">con presencia nacional</span></h2>
+        <p class="section-subtitle">Somos una empresa venezolana especializada en la fabricación y distribución de pisos modulares de polipropileno de alta densidad. Abastecemos proyectos industriales, deportivos y comerciales en todo el territorio nacional e internacional.</p>
+        <div style="display:flex; flex-direction:column; gap:0.85rem; margin-top:2rem;">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <div style="width:32px; height:32px; background:rgba(14,165,233,0.1); border:1px solid rgba(14,165,233,0.25); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:0.95rem; flex-shrink:0;">🏭</div>
+            <span style="font-size:0.88rem; color:rgba(248,250,252,0.8);">Fabricación 100% venezolana con control de calidad</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <div style="width:32px; height:32px; background:rgba(14,165,233,0.1); border:1px solid rgba(14,165,233,0.25); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:0.95rem; flex-shrink:0;">⚡</div>
+            <span style="font-size:0.88rem; color:rgba(248,250,252,0.8);">Instalación en horas, sin herramientas ni pegamento</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <div style="width:32px; height:32px; background:rgba(14,165,233,0.1); border:1px solid rgba(14,165,233,0.25); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:0.95rem; flex-shrink:0;">🛡️</div>
+            <span style="font-size:0.88rem; color:rgba(248,250,252,0.8);">Hasta 7 toneladas por m² — resistencia industrial real</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <div style="width:32px; height:32px; background:rgba(14,165,233,0.1); border:1px solid rgba(14,165,233,0.25); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:0.95rem; flex-shrink:0;">🌎</div>
+            <span style="font-size:0.88rem; color:rgba(248,250,252,0.8);">Exportamos a Colombia, Panamá, R. Dominicana y más</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Derecha: mockup celular con thumbnail + play -->
+      <div style="display:flex; justify-content:center; align-items:center;">
+        <!-- Marco del celular -->
+        <div style="position:relative; width:260px; height:540px; background:#0a0a0a; border-radius:38px; border:2px solid rgba(255,255,255,0.12); box-shadow:0 0 0 1px rgba(0,0,0,0.5), 0 30px 80px rgba(0,0,0,0.6), 0 0 40px rgba(14,165,233,0.12), inset 0 0 0 1px rgba(255,255,255,0.05); overflow:hidden; flex-shrink:0; cursor:pointer;" onclick="openAboutVideo()">
+          <!-- Notch -->
+          <div style="position:absolute; top:0; left:50%; transform:translateX(-50%); width:90px; height:28px; background:#0a0a0a; border-radius:0 0 18px 18px; z-index:10; display:flex; align-items:center; justify-content:center; gap:6px;">
+            <div style="width:8px; height:8px; background:#1a1a1a; border-radius:50%; border:1px solid rgba(255,255,255,0.08);"></div>
+            <div style="width:36px; height:5px; background:#1a1a1a; border-radius:3px;"></div>
+          </div>
+          <!-- Thumbnail (frame extraído del video en el segundo 6) -->
+          <img
+            src="https://res.cloudinary.com/dpiavcukm/video/upload/so_6,f_jpg,q_auto,w_600/v1781814033/insta_video_19559_ydmtkt.jpg"
+            alt="Ver video Piso Modular 3D"
+            style="width:100%; height:100%; object-fit:cover; display:block; border-radius:36px;"
+          >
+          <!-- Overlay oscuro -->
+          <div style="position:absolute; inset:0; background:rgba(6,9,18,0.35); border-radius:36px;"></div>
+          <!-- Botón play -->
+          <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.75rem;">
+            <div style="width:64px; height:64px; background:rgba(14,165,233,0.9); border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 8px rgba(14,165,233,0.2), 0 8px 30px rgba(14,165,233,0.4); transition:transform 0.2s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style="margin-left:3px;"><path d="M6 4l13 7-13 7V4z" fill="#fff"/></svg>
+            </div>
+            <span style="font-family:var(--font-mono); font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.8);">Ver video</span>
+          </div>
+          <!-- Barra home -->
+          <div style="position:absolute; bottom:10px; left:50%; transform:translateX(-50%); width:100px; height:4px; background:rgba(255,255,255,0.25); border-radius:2px; z-index:5;"></div>
+        </div>
+      </div>
+
+      <!-- Lightbox video about -->
+      <div id="about-video-lb" onclick="closeAboutVideo(event)" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:9999; align-items:center; justify-content:center;">
+        <div style="position:relative; width:min(420px, 92vw); aspect-ratio:9/16; border-radius:16px; overflow:hidden; box-shadow:0 0 80px rgba(0,0,0,0.8);">
+          <video id="about-video-player" playsinline controls style="width:100%; height:100%; object-fit:cover; display:block;">
+            <source src="https://res.cloudinary.com/dpiavcukm/video/upload/f_auto,q_auto,vc_auto,w_800/v1781814033/insta_video_19559_ydmtkt.mp4" type="video/mp4">
+          </video>
+        </div>
+        <button onclick="closeAboutVideo(event, true)" aria-label="Cerrar video" style="position:fixed; top:max(16px, env(safe-area-inset-top)); right:max(16px, env(safe-area-inset-right)); width:44px; height:44px; background:rgba(0,0,0,0.7); border:1px solid rgba(255,255,255,0.25); border-radius:50%; color:#fff; font-size:1.3rem; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1; backdrop-filter:blur(8px); z-index:10000;">✕</button>
+      </div>
+
+
+    </div>
+
+  <div style="">
+
+    <!-- POR QUÉ ELEGIRNOS -->
+    <div style="margin-bottom:4rem;" class="fade-in">
+      <div style="text-align:center; margin-bottom:2.5rem;">
+        <div class="section-label">Por qué elegirnos</div>
+        <h3 style="font-family:var(--font-display); font-size:clamp(1.5rem,3vw,2rem); font-weight:700; color:#fff; margin:0;">La diferencia está en los detalles</h3>
+      </div>
+      <div class="about-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
+
+        <div style="display:flex; gap:1.25rem; align-items:flex-start; padding:1.5rem; background:var(--bg-card); border:1px solid rgba(56,189,248,0.08); border-radius:8px; transition:all 0.3s ease;" onmouseover="this.style.borderColor='rgba(14,165,233,0.3)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(56,189,248,0.08)';this.style.transform='translateY(0)'">
+          <div style="width:44px; height:44px; background:rgba(14,165,233,0.1); border:1px solid rgba(14,165,233,0.2); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0;">🏭</div>
+          <div>
+            <div style="font-family:'Inter',sans-serif; font-size:0.92rem; font-weight:700; color:#fff; margin-bottom:0.35rem;">Producción Nacional</div>
+            <div style="font-size:0.82rem; color:rgba(148,163,184,0.7); line-height:1.65;">Fabricamos en Venezuela con materias primas de primera calidad. Cada pieza pasa por control de calidad antes de salir al mercado.</div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:1.25rem; align-items:flex-start; padding:1.5rem; background:var(--bg-card); border:1px solid rgba(56,189,248,0.08); border-radius:8px; transition:all 0.3s ease;" onmouseover="this.style.borderColor='rgba(14,165,233,0.3)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(56,189,248,0.08)';this.style.transform='translateY(0)'">
+          <div style="width:44px; height:44px; background:rgba(14,165,233,0.1); border:1px solid rgba(14,165,233,0.2); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0;">⚡</div>
+          <div>
+            <div style="font-family:'Inter',sans-serif; font-size:0.92rem; font-weight:700; color:#fff; margin-bottom:0.35rem;">Instalación en Horas</div>
+            <div style="font-size:0.82rem; color:rgba(148,163,184,0.7); line-height:1.65;">Sistema de clic sin pegamento ni herramientas especiales. Un taller de 200 m² puede estar listo en un solo día de trabajo.</div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:1.25rem; align-items:flex-start; padding:1.5rem; background:var(--bg-card); border:1px solid rgba(56,189,248,0.08); border-radius:8px; transition:all 0.3s ease;" onmouseover="this.style.borderColor='rgba(14,165,233,0.3)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(56,189,248,0.08)';this.style.transform='translateY(0)'">
+          <div style="width:44px; height:44px; background:rgba(14,165,233,0.1); border:1px solid rgba(14,165,233,0.2); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0;">🛡️</div>
+          <div>
+            <div style="font-family:'Inter',sans-serif; font-size:0.92rem; font-weight:700; color:#fff; margin-bottom:0.35rem;">Resistencia Extrema</div>
+            <div style="font-size:0.82rem; color:rgba(148,163,184,0.7); line-height:1.65;">Soportan hasta 7 toneladas por m². Resistentes a aceites, combustibles, productos químicos y tráfico continuo de maquinaria pesada.</div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:1.25rem; align-items:flex-start; padding:1.5rem; background:var(--bg-card); border:1px solid rgba(56,189,248,0.08); border-radius:8px; transition:all 0.3s ease;" onmouseover="this.style.borderColor='rgba(14,165,233,0.3)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(56,189,248,0.08)';this.style.transform='translateY(0)'">
+          <div style="width:44px; height:44px; background:rgba(14,165,233,0.1); border:1px solid rgba(14,165,233,0.2); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0;">📐</div>
+          <div>
+            <div style="font-family:'Inter',sans-serif; font-size:0.92rem; font-weight:700; color:#fff; margin-bottom:0.35rem;">Asesoría Técnica</div>
+            <div style="font-size:0.82rem; color:rgba(148,163,184,0.7); line-height:1.65;">Nuestro equipo evalúa cada proyecto y recomienda la solución óptima. Te acompañamos desde la cotización hasta la instalación final.</div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:1.25rem; align-items:flex-start; padding:1.5rem; background:var(--bg-card); border:1px solid rgba(56,189,248,0.08); border-radius:8px; transition:all 0.3s ease;" onmouseover="this.style.borderColor='rgba(14,165,233,0.3)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(56,189,248,0.08)';this.style.transform='translateY(0)'">
+          <div style="width:44px; height:44px; background:rgba(14,165,233,0.1); border:1px solid rgba(14,165,233,0.2); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0;">🎨</div>
+          <div>
+            <div style="font-family:'Inter',sans-serif; font-size:0.92rem; font-weight:700; color:#fff; margin-bottom:0.35rem;">7 Colores Disponibles</div>
+            <div style="font-size:0.82rem; color:rgba(148,163,184,0.7); line-height:1.65;">Rojo, negro, azul, blanco, gris, verde y amarillo flúor. Personaliza tu espacio con combinaciones que reflejen la identidad de tu negocio.</div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:1.25rem; align-items:flex-start; padding:1.5rem; background:var(--bg-card); border:1px solid rgba(56,189,248,0.08); border-radius:8px; transition:all 0.3s ease;" onmouseover="this.style.borderColor='rgba(14,165,233,0.3)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(56,189,248,0.08)';this.style.transform='translateY(0)'">
+          <div style="width:44px; height:44px; background:rgba(14,165,233,0.1); border:1px solid rgba(14,165,233,0.2); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0;">🌎</div>
+          <div>
+            <div style="font-family:'Inter',sans-serif; font-size:0.92rem; font-weight:700; color:#fff; margin-bottom:0.35rem;">Exportación Internacional</div>
+            <div style="font-size:0.82rem; color:rgba(148,163,184,0.7); line-height:1.65;">Exportamos a Colombia, Panamá, República Dominicana y más. Embalaje seguro y coordinación logística incluida en cada pedido.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- NÚMEROS + MISIÓN -->
+    <div class="about-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; align-items:start;" class="fade-in">
+
+      <!-- Números clave -->
+      <div style="background:var(--bg-card); border:1px solid rgba(56,189,248,0.1); border-radius:8px; padding:2rem; position:relative; overflow:hidden;">
+        <div style="position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--blue-mid), var(--blue-bright));"></div>
+        <div style="font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(148,163,184,0.5); margin-bottom:1.5rem;">En números</div>
+        <div class="about-numbers-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+          <div style="text-align:center; padding:1rem 0; border-right:1px solid rgba(56,189,248,0.08);">
+            <div style="font-family:'Inter',sans-serif; font-size:2.2rem; font-weight:800; letter-spacing:-0.03em; color:#fff; line-height:1;">+5</div>
+            <div style="font-family:var(--font-mono); font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:rgba(100,116,139,0.8); margin-top:0.4rem;">Años en el mercado</div>
+          </div>
+          <div style="text-align:center; padding:1rem 0;">
+            <div style="font-family:'Inter',sans-serif; font-size:2.2rem; font-weight:800; letter-spacing:-0.03em; color:#fff; line-height:1;">+200</div>
+            <div style="font-family:var(--font-mono); font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:rgba(100,116,139,0.8); margin-top:0.4rem;">Proyectos instalados</div>
+          </div>
+          <div style="text-align:center; padding:1rem 0; border-top:1px solid rgba(56,189,248,0.08); border-right:1px solid rgba(56,189,248,0.08);">
+            <div style="font-family:'Inter',sans-serif; font-size:2.2rem; font-weight:800; letter-spacing:-0.03em; color:#fff; line-height:1;">15+</div>
+            <div style="font-family:var(--font-mono); font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:rgba(100,116,139,0.8); margin-top:0.4rem;">Estados del país</div>
+          </div>
+          <div style="text-align:center; padding:1rem 0; border-top:1px solid rgba(56,189,248,0.08);">
+            <div style="font-family:'Inter',sans-serif; font-size:2.2rem; font-weight:800; letter-spacing:-0.03em; color:#fff; line-height:1;">4</div>
+            <div style="font-family:var(--font-mono); font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:rgba(100,116,139,0.8); margin-top:0.4rem;">Países de exportación</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Misión + CTA -->
+      <div style="display:flex; flex-direction:column; gap:1.5rem;">
+        <div style="background:linear-gradient(135deg, rgba(30,58,138,0.25), rgba(14,165,233,0.1)); border:1px solid rgba(14,165,233,0.15); border-radius:8px; padding:2rem;">
+          <div style="font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(14,165,233,0.7); margin-bottom:1rem;">Nuestra misión</div>
+          <p style="font-size:0.95rem; color:rgba(248,250,252,0.85); line-height:1.8; font-style:italic; margin:0;">"Democratizar el acceso a pisos industriales de alta calidad en Venezuela y Latinoamérica, ofreciendo soluciones modulares que combinan resistencia extrema, instalación simple y precio justo."</p>
+        </div>
+        <a href="https://wa.me/584140000000?text=Hola,%20quiero%20saber%20más%20sobre%20Piso%20Modular%203D" target="_blank" class="btn btn-outline" style="align-self:flex-start;">
+          Hablar con un asesor →
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- 3. BENEFICIOS -->
+<!-- ══════════════════════════════════════════════ -->
+<section id="benefits">
+  <div class="container">
+    <div class="benefits-intro">
+      <div class="fade-in">
+        <div class="section-label">Tecnología Industrial</div>
+        <h2 class="section-title">Ingeniería que<br><span style="color:var(--blue-bright)">resiste todo</span></h2>
+        <p class="section-subtitle">
+          Cada módulo está fabricado con polipropileno de alta densidad, diseñado para los entornos más exigentes: químicos agresivos, tráfico pesado, humedad constante y exposición UV.
+        </p>
+        <div style="margin-top:2rem; display:flex; gap:1rem; flex-wrap:wrap;">
+          <a href="#simulator" class="btn btn-primary">Calcular mi proyecto</a>
+          <a href="#applications" class="btn btn-outline">Ver aplicaciones</a>
+        </div>
+      </div>
+      <div class="benefits-visual fade-in" style="transition-delay:0.2s">
+        <!-- Foto principal: todos los colores apilados -->
+        <div style="position:relative; border-radius:10px; overflow:hidden; margin-bottom:1rem; border:1px solid rgba(56,189,248,0.1);">
+          <img
+            src="https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_600/v1781814014/IMG_7879_u4i9hi.jpg"
+            alt="Variedad de colores Piso Modular 3D"
+            style="width:100%; height:200px; object-fit:cover; display:block; filter:brightness(0.9);"
+          >
+          <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(6,9,18,0.7) 0%, transparent 50%);"></div>
+          <div style="position:absolute; bottom:0.75rem; left:1rem; font-family:var(--font-mono); font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,0.7);">7 colores disponibles</div>
+        </div>
+
+        <!-- Grid de colores individuales -->
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:0.5rem;">
+
+          <div class="color-card">
+            <img src="https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_160,h_120,c_fill/v1781814011/IMG_7891_fvwoef.jpg" alt="Rojo">
+            <div class="color-lbl">Rojo</div>
+            <div class="color-name">Rojo</div>
+          </div>
+
+          <div class="color-card">
+            <img src="https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_160,h_120,c_fill/v1781814010/IMG_7889_dausrl.jpg" alt="Negro">
+            <div class="color-lbl">Negro</div>
+            <div class="color-name">Negro</div>
+          </div>
+
+          <div class="color-card">
+            <img src="https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_160,h_120,c_fill/v1781814010/IMG_7892_gov3md.jpg" alt="Azul">
+            <div class="color-lbl">Azul</div>
+            <div class="color-name">Azul</div>
+          </div>
+
+          <div class="color-card">
+            <img src="https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_160,h_120,c_fill/v1781814009/IMG_7890_pfhfkz.jpg" alt="Blanco">
+            <div class="color-lbl">Blanco</div>
+            <div class="color-name">Blanco</div>
+          </div>
+
+          <div class="color-card">
+            <img src="https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_160,h_120,c_fill/v1781814009/IMG_7887_kzfyzk.jpg" alt="Gris">
+            <div class="color-lbl">Gris</div>
+            <div class="color-name">Gris</div>
+          </div>
+
+          <div class="color-card">
+            <img src="https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_160,h_120,c_fill/v1781814009/IMG_7886_bmdnke.jpg" alt="Verde">
+            <div class="color-lbl">Verde</div>
+            <div class="color-name">Verde</div>
+          </div>
+
+          <div class="color-card">
+            <img src="https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_160,h_120,c_fill/v1781814009/IMG_7893_nfb9dk.jpg" alt="Amarillo Fluor">
+            <div class="color-lbl">Amarillo</div>
+            <div class="color-name">Amarillo Fluor</div>
+          </div>
+
+          <!-- Slot vacío con CTA -->
+          <div style="border-radius:6px; border:1px dashed rgba(14,165,233,0.2); background:rgba(14,165,233,0.04); display:flex; flex-direction:column; align-items:center; justify-content:center; height:calc(80px + 1.6rem); gap:0.3rem; cursor:pointer;" onclick="window.open('https://wa.me/584140000000?text=Hola,%20quiero%20ver%20los%20colores%20disponibles','_blank')">
+            <div style="font-size:1.1rem;">🎨</div>
+            <div style="font-family:var(--font-mono); font-size:0.55rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(14,165,233,0.7); text-align:center; line-height:1.4;">Más<br>colores</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="benefits-grid fade-in">
+      <div class="benefit-card">
+        <div class="benefit-icon">🏋️</div>
+        <div class="benefit-title">Hasta 7 Ton / m²</div>
+        <div class="benefit-desc">Estructura de carga diseñada para equipos pesados, vehículos y maquinaria industrial sin deformación.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🛡️</div>
+        <div class="benefit-title">Antideslizante</div>
+        <div class="benefit-desc">Superficie texturizada con coeficiente de fricción superior para máxima seguridad en zonas húmedas.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">⚗️</div>
+        <div class="benefit-title">Resistente a Químicos</div>
+        <div class="benefit-desc">Inmune a aceites, combustibles, detergentes y productos industriales. Ideal para talleres y autolavados.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">⚡</div>
+        <div class="benefit-title">Instalación Express</div>
+        <div class="benefit-desc">Sistema clic sin herramientas ni adhesivos. Un operario puede instalar 100m² en un turno de trabajo.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">💧</div>
+        <div class="benefit-title">Drenaje Rápido</div>
+        <div class="benefit-desc">Diseño abierto que permite el flujo libre de agua, evitando charcos y acumulación de humedad.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">✅</div>
+        <div class="benefit-title">Bajo Mantenimiento</div>
+        <div class="benefit-desc">No requiere selladores, ceras ni tratamientos especiales. Limpieza con agua y detergente común.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">☀️</div>
+        <div class="benefit-title">Protección UV</div>
+        <div class="benefit-desc">Aditivos estabilizadores UV evitan degradación y decoloración en instalaciones a la intemperie.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">♻️</div>
+        <div class="benefit-title">Material Reciclable</div>
+        <div class="benefit-desc">Fabricado con polipropileno reciclado de alta densidad. Producto sostenible y certificado.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- 4 & 12. SIMULADOR INTELIGENTE -->
+<!-- ══════════════════════════════════════════════ -->
+<section id="simulator">
+  <div class="container">
+    <div style="text-align:center; margin-bottom:3rem;" class="fade-in">
+      <div class="section-label">Simulador Inteligente</div>
+      <h2 class="section-title">Calcula tu <span style="color:var(--blue-bright)">Proyecto</span></h2>
+      <p class="section-subtitle" style="margin:0 auto;">Ingresa las medidas y obtén al instante: módulos necesarios, peso soportado, tiempo de instalación y estimación de inversión.</p>
+    </div>
+    <div class="simulator-wrap">
+      <div class="simulator-form fade-in">
+        <div class="sim-field">
+          <label class="sim-label">Tipo de Proyecto</label>
+          <select class="sim-select" id="sim-type" onchange="calcular()">
+            <option value="taller">Taller Mecánico</option>
+            <option value="piscina">Piscina / Área Húmeda</option>
+            <option value="gimnasio">Gimnasio / Fitness</option>
+            <option value="industrial">Patio Industrial</option>
+            <option value="autolavado">Autolavado</option>
+            <option value="cancha">Cancha Deportiva</option>
+          </select>
+        </div>
+        <div class="sim-row">
+          <div class="sim-field">
+            <label class="sim-label">Largo (metros)</label>
+            <input type="number" class="sim-input" id="sim-largo" value="10" min="1" oninput="calcular()">
+          </div>
+          <div class="sim-field">
+            <label class="sim-label">Ancho (metros)</label>
+            <input type="number" class="sim-input" id="sim-ancho" value="8" min="1" oninput="calcular()">
+          </div>
+        </div>
+        <div class="sim-field">
+          <label class="sim-label">Nivel de Tránsito</label>
+          <select class="sim-select" id="sim-trafico" onchange="calcular()">
+            <option value="liviano">Liviano (peatonal)</option>
+            <option value="medio" selected>Medio (vehículos ligeros)</option>
+            <option value="pesado">Pesado (maquinaria / camiones)</option>
+          </select>
+        </div>
+
+        <a href="#" class="btn btn-primary" id="sim-cta" style="width:100%; justify-content:center; margin-top:0.5rem;">
+          ⚡ Solicitar Cotización Personalizada
+        </a>
+      </div>
+
+      <div class="simulator-results fade-in" style="transition-delay:0.15s">
+        <div class="sim-results-header">📐 Resultados del Proyecto</div>
+        <div class="sim-result-row">
+          <span class="sim-result-label">Superficie Total</span>
+          <span class="sim-result-val big" id="r-m2">80 m²</span>
+        </div>
+        <div class="sim-result-row">
+          <span class="sim-result-label">Módulos necesarios</span>
+          <span class="sim-result-val" id="r-modulos">320 unidades</span>
+        </div>
+        <div class="sim-result-row">
+          <span class="sim-result-label">Capacidad de carga</span>
+          <span class="sim-result-val" id="r-carga">560 Toneladas</span>
+        </div>
+        <div class="sim-result-row">
+          <span class="sim-result-label">Tiempo estimado de instalación</span>
+          <span class="sim-result-val" id="r-tiempo">1 día</span>
+        </div>
+        <div class="sim-result-row">
+          <span class="sim-result-label">Tipo recomendado</span>
+          <span class="sim-result-val" id="r-tipo">Industrial Heavy</span>
+        </div>
+        <div style="margin-top:1.5rem; padding:1.25rem; background:rgba(14,165,233,0.06); border:1px solid rgba(14,165,233,0.15); border-radius:var(--radius);">
+          <div style="font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.2em; color:var(--blue-bright); margin-bottom:0.5rem;">ESTIMACIÓN DE INVERSIÓN</div>
+          <div style="font-family:'Inter',sans-serif; font-size:1.8rem; font-weight:800; letter-spacing:-0.02em; color:var(--white);" id="r-precio">Consultar</div>
+          <div style="font-size:0.72rem; color:var(--steel); margin-top:0.25rem;">*Precio referencial. Sujeto a ubicación y tipo exacto de módulo.</div>
+        </div>
+        <p class="sim-disclaimer">Los resultados son estimaciones basadas en módulos de 0.25m² (50×50cm). Solicita cotización exacta con visita técnica gratuita.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- 5. APLICACIONES -->
+<!-- ══════════════════════════════════════════════ -->
+<section id="applications">
+  <div class="container">
+    <div class="fade-in">
+      <div class="section-label">Sectores de Aplicación</div>
+      <h2 class="section-title">Un piso para <span style="color:var(--blue-bright)">cada industria</span></h2>
+    </div>
+    <div class="apps-grid">
+      <div class="app-card fade-in">
+        <div class="app-card-img">
+          <div class="app-card-img-bg" style="background:linear-gradient(135deg,#1a1a2e,#16213e); font-size:5rem;">🔧</div>
+          <div class="app-card-overlay"></div>
+          <span class="app-card-cat">Talleres</span>
+        </div>
+        <div class="app-card-body">
+          <div class="app-card-title">Talleres Mecánicos</div>
+          <ul class="app-card-features">
+            <li>Resistente a aceites y combustibles</li>
+            <li>Fácil limpieza de derrames</li>
+            <li>Soporte para elevadores y prensas</li>
+            <li>Antideslizante con líquidos</li>
+          </ul>
+          <a href="https://wa.me/584140000000?text=Hola,%20necesito%20información%20de%20pisos%20para%20taller%20mecánico" target="_blank" class="btn btn-ghost" style="font-size:0.75rem; padding:9px 16px;">Cotizar para mi taller →</a>
+        </div>
+      </div>
+
+      <div class="app-card fade-in" style="transition-delay:0.1s">
+        <div class="app-card-img">
+          <div class="app-card-img-bg" style="background:linear-gradient(135deg,#0c2a4a,#0ea5e9); font-size:5rem;">🏊</div>
+          <div class="app-card-overlay"></div>
+          <span class="app-card-cat">Piscinas</span>
+        </div>
+        <div class="app-card-body">
+          <div class="app-card-title">Áreas de Piscina</div>
+          <ul class="app-card-features">
+            <li>100% resistente al agua y cloro</li>
+            <li>Antideslizante en mojado</li>
+            <li>Drenaje superior integrado</li>
+            <li>No retiene calor del sol</li>
+          </ul>
+          <a href="https://wa.me/584140000000?text=Hola,%20necesito%20pisos%20para%20área%20de%20piscina" target="_blank" class="btn btn-ghost" style="font-size:0.75rem; padding:9px 16px;">Cotizar para piscina →</a>
+        </div>
+      </div>
+
+      <div class="app-card fade-in" style="transition-delay:0.2s">
+        <div class="app-card-img">
+          <div class="app-card-img-bg" style="background:linear-gradient(135deg,#1a0a2e,#7c3aed); font-size:5rem;">💪</div>
+          <div class="app-card-overlay"></div>
+          <span class="app-card-cat">Fitness</span>
+        </div>
+        <div class="app-card-body">
+          <div class="app-card-title">Gimnasios</div>
+          <ul class="app-card-features">
+            <li>Absorción de impacto de equipos</li>
+            <li>Superficie ergonómica</li>
+            <li>Fácil higienización</li>
+            <li>Disponible en varios colores</li>
+          </ul>
+          <a href="https://wa.me/584140000000?text=Hola,%20quiero%20pisos%20para%20mi%20gimnasio" target="_blank" class="btn btn-ghost" style="font-size:0.75rem; padding:9px 16px;">Cotizar para gym →</a>
+        </div>
+      </div>
+
+      <div class="app-card fade-in" style="transition-delay:0.1s">
+        <div class="app-card-img">
+          <div class="app-card-img-bg" style="background:linear-gradient(135deg,#1a0c0c,#991b1b); font-size:5rem;">🏭</div>
+          <div class="app-card-overlay"></div>
+          <span class="app-card-cat">Industrial</span>
+        </div>
+        <div class="app-card-body">
+          <div class="app-card-title">Patios Industriales</div>
+          <ul class="app-card-features">
+            <li>Carga hasta 7 ton/m²</li>
+            <li>Instalación sin obra civil</li>
+            <li>Removible y reubicable</li>
+            <li>Resistente a intemperie</li>
+          </ul>
+          <a href="https://wa.me/584140000000?text=Hola,%20necesito%20pisos%20para%20patio%20industrial" target="_blank" class="btn btn-ghost" style="font-size:0.75rem; padding:9px 16px;">Cotizar industrial →</a>
+        </div>
+      </div>
+
+      <div class="app-card fade-in" style="transition-delay:0.2s">
+        <div class="app-card-img">
+          <div class="app-card-img-bg" style="background:linear-gradient(135deg,#0a2e0a,#15803d); font-size:5rem;">🚗</div>
+          <div class="app-card-overlay"></div>
+          <span class="app-card-cat">Autolavado</span>
+        </div>
+        <div class="app-card-body">
+          <div class="app-card-title">Autolavados</div>
+          <ul class="app-card-features">
+            <li>Drenaje integrado de alta eficiencia</li>
+            <li>Resistente a jabones y químicos</li>
+            <li>Aspecto profesional y premium</li>
+            <li>Fácil reemplazo por sección</li>
+          </ul>
+          <a href="https://wa.me/584140000000?text=Hola,%20quiero%20pisos%20para%20autolavado" target="_blank" class="btn btn-ghost" style="font-size:0.75rem; padding:9px 16px;">Cotizar autolavado →</a>
+        </div>
+      </div>
+
+      <div class="app-card fade-in" style="transition-delay:0.3s">
+        <div class="app-card-img">
+          <div class="app-card-img-bg" style="background:linear-gradient(135deg,#0a1a2e,#1d4ed8); font-size:5rem;">⚽</div>
+          <div class="app-card-overlay"></div>
+          <span class="app-card-cat">Canchas</span>
+        </div>
+        <div class="app-card-body">
+          <div class="app-card-title">Canchas Deportivas</div>
+          <ul class="app-card-features">
+            <li>Superficie de alto rendimiento deportivo</li>
+            <li>Marcaje de líneas integrado</li>
+            <li>Amortigua impactos articulares</li>
+            <li>Varios deportes: basket, futsal, vóley</li>
+          </ul>
+          <a href="https://wa.me/584140000000?text=Hola,%20necesito%20pisos%20para%20cancha%20deportiva" target="_blank" class="btn btn-ghost" style="font-size:0.75rem; padding:9px 16px;">Cotizar cancha →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- 6. COMPARATIVA -->
+<!-- ══════════════════════════════════════════════ -->
+<section id="comparison">
+  <div class="container">
+    <div class="fade-in" style="text-align:center; margin-bottom:1rem;">
+      <div class="section-label">Análisis Técnico</div>
+      <h2 class="section-title">Piso Modular 3D <span style="color:var(--blue-bright)">vs</span> Piso Tradicional</h2>
+    </div>
+    <div class="comparison-table-wrap fade-in">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Característica</th>
+            <th class="highlight">⬡ Piso Modular 3D</th>
+            <th class="dull">Piso Tradicional</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tiempo de instalación</td>
+            <td class="plus"><span class="comp-icon">✅</span> Horas</td>
+            <td class="minus"><span class="comp-icon">❌</span> Días / semanas</td>
+          </tr>
+          <tr>
+            <td>Drenaje</td>
+            <td class="plus"><span class="comp-icon">✅</span> Instantáneo (diseño abierto)</td>
+            <td class="minus"><span class="comp-icon">⚠️</span> Requiere pendiente y sumideros</td>
+          </tr>
+          <tr>
+            <td>Resistencia química</td>
+            <td class="plus"><span class="comp-icon">✅</span> Alta (polipropileno HD)</td>
+            <td class="minus"><span class="comp-icon">❌</span> Baja (se deteriora con aceite)</td>
+          </tr>
+          <tr>
+            <td>Capacidad de carga</td>
+            <td class="plus"><span class="comp-icon">✅</span> Hasta 7 ton/m²</td>
+            <td class="minus"><span class="comp-icon">⚠️</span> Variable según espesor</td>
+          </tr>
+          <tr>
+            <td>Desmontable y reubicable</td>
+            <td class="plus"><span class="comp-icon">✅</span> 100% modular</td>
+            <td class="minus"><span class="comp-icon">❌</span> Permanente</td>
+          </tr>
+          <tr>
+            <td>Mantenimiento</td>
+            <td class="plus"><span class="comp-icon">✅</span> Mínimo</td>
+            <td class="minus"><span class="comp-icon">❌</span> Sellado, pintura y reparación periódica</td>
+          </tr>
+          <tr>
+            <td>Limpieza</td>
+            <td class="plus"><span class="comp-icon">✅</span> Agua y detergente</td>
+            <td class="minus"><span class="comp-icon">⚠️</span> Máquinas y productos especiales</td>
+          </tr>
+          <tr>
+            <td>Obra civil requerida</td>
+            <td class="plus"><span class="comp-icon">✅</span> No</td>
+            <td class="minus"><span class="comp-icon">❌</span> Sí (fraguado y curado)</td>
+          </tr>
+          <tr>
+            <td>Reemplazo por sección dañada</td>
+            <td class="plus"><span class="comp-icon">✅</span> Módulo individual</td>
+            <td class="minus"><span class="comp-icon">❌</span> Intervención general</td>
+          </tr>
+          <tr>
+            <td>Impacto ambiental</td>
+            <td class="plus"><span class="comp-icon">✅</span> Material reciclable</td>
+            <td class="minus"><span class="comp-icon">❌</span> Residuos de demolición</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- 7. GALERÍA -->
+<!-- ══════════════════════════════════════════════ -->
+<section id="gallery">
+  <div class="container">
+    <div class="fade-in">
+      <div class="section-label">Portafolio de Proyectos</div>
+      <h2 class="section-title">Proyectos <span style="color:var(--blue-bright)">Realizados</span></h2>
+    </div>
+    <div class="gallery-filters">
+      <button class="filter-btn active" onclick="filterGallery('all', this)">Todos</button>
+      <button class="filter-btn" onclick="filterGallery('taller', this)">Talleres</button>
+      <button class="filter-btn" onclick="filterGallery('piscina', this)">Piscinas</button>
+      <button class="filter-btn" onclick="filterGallery('gimnasio', this)">Gimnasios</button>
+      <button class="filter-btn" onclick="filterGallery('industrial', this)">Industriales</button>
+      <button class="filter-btn" onclick="filterGallery('cancha', this)">Canchas</button>
+    </div>
+    <div class="gallery-grid" id="gallery-grid">
+      <div class="gallery-item" data-cat="taller" onclick="openLightbox('taller1')" style="background:linear-gradient(135deg,#1a1a2e,#0f0f1e);">
+        🔧
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-info">
+            <div class="gallery-item-title">Taller AutoPro</div>
+            <div class="gallery-item-loc">📍 Caracas · 280 m²</div>
+          </div>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="piscina" onclick="openLightbox('piscina1')" style="background:linear-gradient(135deg,#0c2a4a,#0a1628);">
+        🏊
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-info">
+            <div class="gallery-item-title">Club Náutico VIP</div>
+            <div class="gallery-item-loc">📍 Valencia · 150 m²</div>
+          </div>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="gimnasio" onclick="openLightbox('gym1')" style="background:linear-gradient(135deg,#1a0a2e,#0f0620);">
+        💪
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-info">
+            <div class="gallery-item-title">Elite Fitness Center</div>
+            <div class="gallery-item-loc">📍 Maracaibo · 420 m²</div>
+          </div>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="cancha" onclick="openLightbox('cancha1')" style="background:linear-gradient(135deg,#0a1a2e,#050d1a);">
+        ⚽
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-info">
+            <div class="gallery-item-title">Cancha Polideportiva</div>
+            <div class="gallery-item-loc">📍 Maracay · 600 m²</div>
+          </div>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="industrial" onclick="openLightbox('ind1')" style="background:linear-gradient(135deg,#1a0c0c,#0f0808);">
+        🏭
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-info">
+            <div class="gallery-item-title">Almacén Industrial</div>
+            <div class="gallery-item-loc">📍 Barquisimeto · 1.200 m²</div>
+          </div>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="taller" onclick="openLightbox('taller2')" style="background:linear-gradient(135deg,#1a1a2e,#0f0f1e);">
+        🚗
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-info">
+            <div class="gallery-item-title">Autolavado Premium</div>
+            <div class="gallery-item-loc">📍 Caracas · 180 m²</div>
+          </div>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="otros" onclick="openLightbox('proy1')" style="background-image:url('https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_600/v1781814779/IMG_7895_b3grnl.jpg'); background-size:cover; background-position:center;"></div>
+      <div class="gallery-item" data-cat="otros" onclick="openLightbox('proy2')" style="background-image:url('https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_600/v1781814013/IMG_7882_r2jvkv.jpg'); background-size:cover; background-position:center;"></div>
+      <div class="gallery-item" data-cat="otros" onclick="openLightbox('proy3')" style="background-image:url('https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_600/v1781814022/IMG_7883_g4ddni.jpg'); background-size:cover; background-position:center;"></div>
+      <div class="gallery-item" data-cat="otros" onclick="openLightbox('proyvideo')" style="background-image:url('https://res.cloudinary.com/dpiavcukm/video/upload/so_1,f_jpg,q_auto,w_600/v1781814786/insta_video_76229_sgthha.jpg'); background-size:cover; background-position:center;">
+        <div style="width:56px; height:56px; background:rgba(14,165,233,0.9); border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 8px rgba(14,165,233,0.2), 0 8px 30px rgba(14,165,233,0.4); position:relative; z-index:2;">
+          <svg width="20" height="20" viewBox="0 0 22 22" fill="none" style="margin-left:2px;"><path d="M6 4l13 7-13 7V4z" fill="#fff"/></svg>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="otros" onclick="openLightbox('proy4')" style="background-image:url('https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_600/v1781818934/IMG_7897_ybobqq.jpg'); background-size:cover; background-position:center;"></div>
+      <div class="gallery-item" data-cat="otros" onclick="openLightbox('proy5')" style="background-image:url('https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_600/v1781818934/IMG_7899_hxhjdj.jpg'); background-size:cover; background-position:center;"></div>
+      <div class="gallery-item" data-cat="otros" onclick="openLightbox('proy6')" style="background-image:url('https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_600/v1781818934/IMG_7898_svnutu.jpg'); background-size:cover; background-position:center;"></div>
+      <div class="gallery-item" data-cat="otros" onclick="openLightbox('proy7')" style="background-image:url('https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_600/v1781818934/IMG_7900_vzhqgs.jpg'); background-size:cover; background-position:center;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightboxFully()">✕</button>
+  <div class="lightbox-content">
+    <div class="lightbox-img-area" id="lb-img">🔧</div>
+    <div class="lightbox-body">
+      <h3 id="lb-title">Taller AutoPro</h3>
+      <p id="lb-desc">Instalación de 280 m² de piso modular tipo Heavy Duty en taller mecánico de alta rotación. Tiempo de instalación: 1 día. Resultado: superficie antideslizante, resistente a aceites y fácil de limpiar.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- 8. TESTIMONIOS -->
+<!-- ══════════════════════════════════════════════ -->
+<section id="testimonials">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;">
+      <div class="section-label">Clientes Reales</div>
+      <h2 class="section-title">Lo que dicen <span style="color:var(--blue-bright)">nuestros clientes</span></h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-in">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">Instalamos 280m² en nuestro taller en un solo día. La diferencia es brutal: ya no tenemos charcos de aceite y la limpieza diaria bajó de 2 horas a 20 minutos. Totalmente recomendado.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">RG</div>
+          <div>
+            <div class="testimonial-name">Roberto García</div>
+            <div class="testimonial-role">Taller Mecánico · Caracas</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-in" style="transition-delay:0.1s">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">Para nuestra área de piscina era esencial un piso antideslizante y que aguantara el cloro. Llevamos 2 años con los módulos y están perfectos. El drenaje es increíble, nunca se acumula agua.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">MS</div>
+          <div>
+            <div class="testimonial-name">María Suárez</div>
+            <div class="testimonial-role">Club Deportivo · Valencia</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-in" style="transition-delay:0.2s">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">Pusimos el piso modular en 420m² de nuestro gimnasio. Los clientes lo notan inmediatamente: se ve profesional, amortiza bien los impactos y es muy fácil de limpiar entre clases. Inmejorable.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">CE</div>
+          <div>
+            <div class="testimonial-name">Carlos Espinoza</div>
+            <div class="testimonial-role">Elite Fitness · Maracaibo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- 9. DISTRIBUIDORES -->
+<!-- ══════════════════════════════════════════════ -->
+<section id="distributors">
+  <div class="container">
+    <div class="distributors-wrap">
+      <div class="fade-in">
+        <div class="section-label">Red de Distribución</div>
+        <h2 class="section-title">Conviértete en<br><span style="color:var(--blue-bright)">Distribuidor Oficial</span></h2>
+        <p class="section-subtitle" style="margin-bottom:2rem;">Únete a la red de distribuidores de Piso Modular 3D y accede a márgenes exclusivos, soporte técnico y material comercial premium.</p>
+        <div class="dist-benefits">
+          <div class="dist-benefit">
+            <div class="dist-benefit-icon">🎓</div>
+            <div class="dist-benefit-title">Capacitación</div>
+            <div class="dist-benefit-desc">Programa de formación técnica y comercial completo.</div>
+          </div>
+          <div class="dist-benefit">
+            <div class="dist-benefit-icon">🤝</div>
+            <div class="dist-benefit-title">Soporte Total</div>
+            <div class="dist-benefit-desc">Equipo dedicado para resolver dudas y cerrar ventas.</div>
+          </div>
+          <div class="dist-benefit">
+            <div class="dist-benefit-icon">📦</div>
+            <div class="dist-benefit-title">Material Comercial</div>
+            <div class="dist-benefit-desc">Catálogos, muestras y material digital profesional.</div>
+          </div>
+          <div class="dist-benefit">
+            <div class="dist-benefit-icon">📈</div>
+            <div class="dist-benefit-title">Crecimiento</div>
+            <div class="dist-benefit-desc">Territorio exclusivo y acceso a grandes proyectos.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dist-form fade-in" style="transition-delay:0.15s">
+        <h3 style="font-family:'Inter',sans-serif; font-size:1.15rem; font-weight:800; letter-spacing:-0.02em; margin-bottom:1.5rem;">Registro de Interés</h3>
+        <div class="form-row">
+          <label class="form-label">Nombre Completo</label>
+          <input type="text" class="form-input" placeholder="Tu nombre">
+        </div>
+        <div class="form-row">
+          <label class="form-label">Empresa</label>
+          <input type="text" class="form-input" placeholder="Nombre de tu empresa">
+        </div>
+        <div class="form-row">
+          <label class="form-label">Ciudad / Estado</label>
+          <input type="text" class="form-input" placeholder="¿Dónde operarías?">
+        </div>
+        <div class="form-row">
+          <label class="form-label">WhatsApp</label>
+          <input type="tel" class="form-input" placeholder="+58 412 000 0000">
+        </div>
+        <div class="form-row">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" placeholder="correo@empresa.com">
+        </div>
+        <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="enviarDistribuidor()">
+          📤 Enviar Solicitud
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- 11. CTA FINAL -->
+<!-- ══════════════════════════════════════════════ -->
+<section id="final-cta">
+  <div class="container">
+    <div class="fade-in" style="position:relative; z-index:1;">
+      <div class="section-label" style="justify-content:center;">Próximo Paso</div>
+      <h2 class="cta-glow">
+        Solicita tu cotización<br>
+        <span style="color:var(--blue-bright)">personalizada hoy</span>
+      </h2>
+      <p class="cta-sub">Análisis técnico gratuito, visita a tu proyecto sin costo y propuesta en menos de 24 horas. Miles de m² instalados nos respaldan.</p>
+      <div class="cta-buttons">
+        <a href="https://wa.me/584140000000?text=Hola,%20quiero%20una%20cotización%20personalizada%20de%20Piso%20Modular%203D%20para%20mi%20proyecto" target="_blank" class="btn btn-whatsapp" style="font-size:1.05rem; padding:16px 32px;">
+          💬 Escribir por WhatsApp
+        </a>
+        <a href="#simulator" class="btn btn-primary" style="font-size:1.05rem; padding:16px 32px;">
+          ⚡ Usar Simulador
+        </a>
+        <a href="#distributors" class="btn btn-outline" style="font-size:1.05rem; padding:16px 32px;">
+          🤝 Ser Distribuidor
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- FOOTER -->
+<!-- ══════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:0.75rem;">
+          <img src="https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,h_40/v1781812406/IMG_7880_qa4e04_h9kpdg.png" alt="Piso Modular 3D" style="height:40px; width:auto; display:block;">
+        </div>
+        <p>Fabricante venezolano de pisos modulares de alta resistencia para proyectos industriales, deportivos y comerciales.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Productos</h4>
+        <ul>
+          <li><a href="#">Heavy Duty Industrial</a></li>
+          <li><a href="#">Sport Pro</a></li>
+          <li><a href="#">Aqua Drain</a></li>
+          <li><a href="#">Eco Modular</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Sectores</h4>
+        <ul>
+          <li><a href="#applications">Talleres Mecánicos</a></li>
+          <li><a href="#applications">Piscinas</a></li>
+          <li><a href="#applications">Gimnasios</a></li>
+          <li><a href="#applications">Canchas Deportivas</a></li>
+          <li><a href="#applications">Autolavados</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="https://wa.me/584140000000" target="_blank">💬 WhatsApp</a></li>
+          <li><a href="mailto:info@pisomodular3d.com">📧 Email</a></li>
+          <li><a href="#">📍 Caracas, Venezuela</a></li>
+          <li><a href="#distributors">🤝 Distribuidores</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Piso Modular 3D · Todos los derechos reservados · Venezuela</p>
+      <p>Fabricante de pisos modulares industriales y deportivos</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- FLOTANTES: WHATSAPP + AI CONCIERGE -->
+<!-- ══════════════════════════════════════════════ -->
+
+
+<div id="ai-concierge-btn">
+  <span class="ai-btn-label">Asesor IA</span>
+  <div class="ai-btn-circle" onclick="toggleChat()" title="Asesor Virtual IA">🤖</div>
+</div>
+
+<!-- Chat Window -->
+<div id="ai-chat-window">
+  <div class="chat-header">
+    <div class="chat-header-info">
+      <div class="chat-avatar">🤖</div>
+      <div>
+        <div class="chat-name">Asesor IA · Piso Modular 3D</div>
+        <div class="chat-status">En línea ahora</div>
+      </div>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-messages" id="chat-messages"></div>
+  <div class="chat-input-area">
+    <input type="text" class="chat-input" id="chat-input" placeholder="Escribe aquí..." onkeypress="if(event.key==='Enter') sendUserMsg()">
+    <button class="chat-send" onclick="sendUserMsg()">➤</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- SCRIPTS -->
+<!-- ══════════════════════════════════════════════ -->
+<script>
+/* ── CANVAS BACKGROUND ── */
+(function() {
+  const canvas = document.getElementById('grid-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, cells = [], tick = 0;
+  const CELL = 60;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    cells = [];
+    for (let x = 0; x < W + CELL; x += CELL) {
+      for (let y = 0; y < H + CELL; y += CELL) {
+        cells.push({ x, y, a: Math.random(), speed: 0.003 + Math.random() * 0.006 });
+      }
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    tick += 0.5;
+    cells.forEach(c => {
+      c.a = 0.03 + (Math.sin(tick * c.speed + c.x * 0.01 + c.y * 0.01) * 0.5 + 0.5) * 0.12;
+      ctx.strokeStyle = `rgba(56, 189, 248, ${c.a})`;
+      ctx.lineWidth = 0.5;
+      ctx.strokeRect(c.x, c.y, CELL - 2, CELL - 2);
+      // inner dot
+      const dot = c.a > 0.08;
+      if (dot) {
+        ctx.fillStyle = `rgba(56, 189, 248, ${c.a * 0.5})`;
+        ctx.beginPath();
+        ctx.arc(c.x + CELL / 2, c.y + CELL / 2, 1.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    });
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  draw();
+})();
+
+/* ── NAV SCROLL ── */
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  if (window.scrollY > 80) {
+    nav.style.background = 'rgba(6, 9, 18, 0.97)';
+  } else {
+    nav.style.background = 'rgba(6, 9, 18, 0.85)';
+  }
+});
+
+function toggleMenu() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+
+/* ── FADE IN OBSERVER ── */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+
+/* ── MODULE VISUAL ── */
+(function() {
+  const grid = document.getElementById('module-visual');
+  if (!grid) return;
+  for (let i = 0; i < 25; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'module-cell';
+    const dotG = document.createElement('div');
+    dotG.className = 'dot-grid';
+    for (let d = 0; d < 16; d++) {
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+      dotG.appendChild(dot);
+    }
+    cell.appendChild(dotG);
+    grid.appendChild(cell);
+  }
+  // animate random cells
+  setInterval(() => {
+    const cells = grid.querySelectorAll('.module-cell');
+    cells.forEach(c => c.classList.remove('active'));
+    const count = 4 + Math.floor(Math.random() * 5);
+    const indices = new Set();
+    while (indices.size < count) indices.add(Math.floor(Math.random() * 25));
+    indices.forEach(i => cells[i].classList.add('active'));
+  }, 1800);
+})();
+
+/* ── COUNTERS ── */
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  const duration = 2000;
+  const step = target / (duration / 16);
+  let current = 0;
+  const timer = setInterval(() => {
+    current += step;
+    if (current >= target) { current = target; clearInterval(timer); }
+    el.textContent = Math.floor(current);
+  }, 16);
+}
+
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.counter').forEach(animateCounter);
+      statsObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+const statsSection = document.getElementById('stats');
+if (statsSection) statsObserver.observe(statsSection);
+
+/* ── SIMULADOR ── */
+const MODULO_M2 = 0.25; // 50x50cm = 0.25m²
+const PRECIOS_REF = { taller: 18, piscina: 22, gimnasio: 20, industrial: 16, autolavado: 21, cancha: 19 };
+const TIPOS_REC = { taller: 'Heavy Duty Pro', piscina: 'Aqua Drain Plus', gimnasio: 'Sport Flex', industrial: 'Industrial Max', autolavado: 'Aqua Drain Plus', cancha: 'Sport Pro' };
+const TRAFICO_MULT = { liviano: 1, medio: 1.1, pesado: 1.25 };
+
+function calcular() {
+  const tipo = document.getElementById('sim-type').value;
+  const largo = parseFloat(document.getElementById('sim-largo').value) || 0;
+  const ancho = parseFloat(document.getElementById('sim-ancho').value) || 0;
+  const trafico = document.getElementById('sim-trafico').value;
+
+  const m2 = largo * ancho;
+  const modulos = Math.ceil(m2 / MODULO_M2 * TRAFICO_MULT[trafico]);
+  const carga = (m2 * 7).toFixed(0);
+  const horas = Math.ceil(m2 / 60);
+  const dias = horas <= 8 ? '1 día' : horas <= 16 ? '2 días' : Math.ceil(horas / 8) + ' días';
+
+  document.getElementById('r-m2').textContent = m2.toFixed(1) + ' m²';
+  document.getElementById('r-modulos').textContent = modulos + ' unidades';
+  document.getElementById('r-carga').textContent = carga + ' Toneladas';
+  document.getElementById('r-tiempo').textContent = dias;
+  document.getElementById('r-tipo').textContent = TIPOS_REC[tipo] || 'Modular 3D';
+  document.getElementById('r-precio').textContent = 'Consultar';
+
+  // Update CTA
+  const wa = `https://wa.me/584140000000?text=Hola!%20Usé%20el%20simulador%20de%20Piso%20Modular%203D%20y%20obtuve%20estos%20datos:%0A%0A▸%20Tipo%20de%20proyecto:%20${tipo}%0A▸%20Superficie:%20${m2.toFixed(1)}%20m²%0A▸%20Módulos%20aprox:%20${modulos}%0A▸%20Tránsito:%20${trafico}%0A%0AMe%20gustaría%20una%20cotización%20exacta%20🙏`;
+  document.getElementById('sim-cta').href = wa;
+}
+calcular();
+
+/* ── ABOUT VIDEO LIGHTBOX ── */
+function openAboutVideo() {
+  const lb = document.getElementById('about-video-lb');
+  const v = document.getElementById('about-video-player');
+  lb.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  v.currentTime = 0;
+  v.play();
+}
+function closeAboutVideo(e, force) {
+  if (!force && e.target !== document.getElementById('about-video-lb')) return;
+  const lb = document.getElementById('about-video-lb');
+  const v = document.getElementById('about-video-player');
+  v.pause();
+  lb.style.display = 'none';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' || e.key === 'Esc') {
+    const lb = document.getElementById('about-video-lb');
+    if (lb && lb.style.display !== 'none') closeAboutVideo(null, true);
+    const gal = document.getElementById('lightbox');
+    if (gal && gal.classList.contains('open')) closeLightboxFully();
+  }
+});
+
+/* ── HERO VIDEO AUTOPLAY MOBILE RETRY ── */
+(function() {
+  const v = document.querySelector('#hero video');
+  if (!v) return;
+  const tryPlay = () => v.play().catch(() => {});
+  ['canplay','loadeddata','loadedmetadata'].forEach(e => v.addEventListener(e, tryPlay, {once:true}));
+  v.load();
+  setTimeout(tryPlay, 800);
+  document.addEventListener('touchstart', tryPlay, {once:true});
+})();
+
+/* ── GALERÍA FILTROS ── */
+function filterGallery(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    if (cat === 'all' || item.dataset.cat === cat) {
+      item.style.display = 'flex';
+      item.style.animation = 'msg-in 0.3s ease';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+
+/* ── LIGHTBOX ── */
+const lbData = {
+  taller1: { icon: '🔧', title: 'Taller AutoPro', desc: 'Instalación de 280 m² de piso modular Heavy Duty en taller mecánico de Caracas. Tiempo de ejecución: 1 día. Beneficios: resistencia total a aceites, limpieza en minutos y superficie antideslizante.' },
+  piscina1: { icon: '🏊', title: 'Club Náutico VIP', desc: '150 m² de piso Aqua Drain instalados en el área perimetral de piscinas del Club Náutico de Valencia. El sistema de drenaje superior elimina completamente la acumulación de agua.' },
+  gym1: { icon: '💪', title: 'Elite Fitness Center', desc: '420 m² de piso Sport Flex para el principal centro de fitness de Maracaibo. La amortiguación de impactos redujo las quejas articulares de los miembros en un 60%.' },
+  cancha1: { icon: '⚽', title: 'Cancha Polideportiva Municipal', desc: '600 m² de superficie Sport Pro para cancha multifuncional en Maracay. Apto para basketball, futsal y voleibol. Líneas de marcaje integradas en el módulo.' },
+  ind1: { icon: '🏭', title: 'Almacén Logístico Industrial', desc: '1.200 m² de piso Industrial Max en almacén de distribución en Barquisimeto. Soporta tráfico continuo de montacargas de hasta 5 toneladas. Instalado en 3 días sin detener operaciones.' },
+  taller2: { icon: '🚗', title: 'Autolavado Premium Express', desc: '180 m² de piso Aqua Drain Plus en autolavado de alta rotación en Caracas. El drenaje integrado elimina el 100% del agua residual sin necesidad de sumideros adicionales.' },
+  proy1: { type: 'image', src: 'https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_1400/v1781814779/IMG_7895_b3grnl.jpg' },
+  proy2: { type: 'image', src: 'https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_1400/v1781814013/IMG_7882_r2jvkv.jpg' },
+  proy3: { type: 'image', src: 'https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_1400/v1781814022/IMG_7883_g4ddni.jpg' },
+  proyvideo: { type: 'video', src: 'https://res.cloudinary.com/dpiavcukm/video/upload/f_auto,q_auto,vc_auto,w_900/v1781814786/insta_video_76229_sgthha.mp4' },
+  proy4: { type: 'image', src: 'https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_1400/v1781818934/IMG_7897_ybobqq.jpg' },
+  proy5: { type: 'image', src: 'https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_1400/v1781818934/IMG_7899_hxhjdj.jpg' },
+  proy6: { type: 'image', src: 'https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_1400/v1781818934/IMG_7898_svnutu.jpg' },
+  proy7: { type: 'image', src: 'https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_1400/v1781818934/IMG_7900_vzhqgs.jpg' },
+};
+
+function openLightbox(id) {
+  const d = lbData[id];
+  if (!d) return;
+  const imgArea = document.getElementById('lb-img');
+  const body = document.querySelector('.lightbox-body');
+  imgArea.innerHTML = '';
+  imgArea.style.backgroundImage = '';
+  imgArea.style.filter = '';
+  if (d.type === 'image') {
+    imgArea.style.backgroundImage = `url('${d.src}')`;
+    imgArea.style.backgroundSize = 'cover';
+    imgArea.style.backgroundPosition = 'center';
+    imgArea.style.filter = 'none';
+  } else if (d.type === 'video') {
+    imgArea.style.filter = 'none';
+    imgArea.innerHTML = `<video src="${d.src}" controls playsinline style="width:100%; height:100%; object-fit:cover; display:block;"></video>`;
+  } else {
+    imgArea.textContent = d.icon;
+  }
+  if (d.title) {
+    body.style.display = '';
+    document.getElementById('lb-title').textContent = d.title;
+    document.getElementById('lb-desc').textContent = d.desc || '';
+  } else {
+    body.style.display = 'none';
+  }
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightboxFully() {
+  const imgArea = document.getElementById('lb-img');
+  const v = imgArea.querySelector('video');
+  if (v) v.pause();
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeLightbox(e) {
+  if (e.target === document.getElementById('lightbox')) {
+    closeLightboxFully();
+  }
+}
+
+/* ── DISTRIBUIDOR ── */
+function enviarDistribuidor() {
+  const nombre = document.querySelector('.dist-form .form-input:nth-of-type(1)').value;
+  const empresa = document.querySelector('.dist-form .form-input:nth-of-type(2)').value;
+  const ciudad = document.querySelector('.dist-form .form-input:nth-of-type(3)').value;
+  const tel = document.querySelector('.dist-form .form-input:nth-of-type(4)').value;
+  const msg = `Hola!%20Quiero%20ser%20distribuidor%20de%20Piso%20Modular%203D.%0A%0AℹNombre:%20${encodeURIComponent(nombre)}%0AEmpresa:%20${encodeURIComponent(empresa)}%0ACiudad:%20${encodeURIComponent(ciudad)}%0ATel:%20${encodeURIComponent(tel)}`;
+  window.open(`https://wa.me/584140000000?text=${msg}`, '_blank');
+}
+
+/* ════════════════════════════════════════════
+   AI CONCIERGE — Groq (Llama 3.3 70B) vía proxy
+   Vercel Edge Function en /api/chat.js
+   ════════════════════════════════════════════ */
+let chatOpen = false;
+let chatHistory = [];
+let chatState = { nombre: '', empresa: '', telefono: '', email: '', tipo: '', metros: '', ciudad: '', trafico: '' };
+let waButtonShown = false;
+
+const SYSTEM_PROMPT = `Eres el Asesor Inteligente de Piso Modular 3D, especialista en pisos modulares industriales y deportivos fabricados en Venezuela. Eres amable, técnico y conciso.
+
+Información de la empresa:
+- Fabricamos pisos modulares de polipropileno HD
+- Resistencia: hasta 7 toneladas por m²
+- Aplicaciones: talleres mecánicos, piscinas, gimnasios, patios industriales, autolavados, canchas deportivas
+- Instalación sin herramientas, sistema de clic
+- WhatsApp comercial: +58 414 000 0000
+
+Tu objetivo es:
+1. Entender el proyecto del cliente (tipo, metros, ciudad, tránsito)
+2. Recomendar el módulo adecuado
+3. Capturar datos: nombre, empresa, teléfono, email
+4. Generar un resumen de lead y pedir que continúen por WhatsApp
+
+Reglas:
+- Respuestas cortas (máx 3 frases)
+- Siempre en español venezolano cordial
+- Menciona precios solo como "cotización personalizada"
+- Nunca inventes especificaciones técnicas que no se mencionan en este prompt
+
+FORMATO DE DATOS (MUY IMPORTANTE):
+Cuando el cliente ya te haya dado el tipo de proyecto y al menos un dato de contacto (nombre o teléfono), agregá AL FINAL de tu respuesta, en una línea nueva después del texto que sí debe leer el cliente, un bloque oculto EXACTAMENTE con este formato:
+<!--LEAD:{"nombre":null,"empresa":null,"telefono":null,"email":null,"tipo":null,"metros":null,"ciudad":null,"trafico":null}-->
+Completá cada campo con el dato real si lo tenés, o dejá null si todavía no lo sabés. Este bloque es invisible para el cliente: nunca lo menciones, nunca le digas que existe, nunca lo escribas dentro de una oración. Va siempre al final, en su propia línea, sin texto extra alrededor.`;
+
+function toggleChat() {
+  chatOpen = !chatOpen;
+  const win = document.getElementById('ai-chat-window');
+  if (chatOpen) {
+    win.classList.add('open');
+    if (chatHistory.length === 0) initChat();
+    document.getElementById('chat-input').focus();
+  } else {
+    win.classList.remove('open');
+  }
+}
+
+function initChat() {
+  const welcomeMsg = 'Hola 👋 Soy el **Asesor Inteligente** de Piso Modular 3D. Puedo ayudarte a elegir la mejor solución para tu proyecto y preparar tu cotización.\n\n¿Qué tipo de proyecto estás planificando?';
+  addBotMsg(welcomeMsg, [
+    'Taller Mecánico', 'Piscina / Área Húmeda', 'Gimnasio', 'Cancha Deportiva', 'Autolavado', 'Patio Industrial'
+  ]);
+}
+
+function addBotMsg(text, opts) {
+  const msgs = document.getElementById('chat-messages');
+  const wrap = document.createElement('div');
+  wrap.className = 'chat-msg bot';
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-bubble';
+  bubble.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+  wrap.appendChild(bubble);
+  if (opts && opts.length) {
+    const optsWrap = document.createElement('div');
+    optsWrap.className = 'chat-quick-opts';
+    opts.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'chat-opt';
+      btn.textContent = opt;
+      btn.onclick = () => { handleUserChoice(opt); };
+      optsWrap.appendChild(btn);
+    });
+    wrap.appendChild(optsWrap);
+  }
+  msgs.appendChild(wrap);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addUserMsg(text) {
+  const msgs = document.getElementById('chat-messages');
+  const wrap = document.createElement('div');
+  wrap.className = 'chat-msg user';
+  wrap.innerHTML = `<div class="chat-bubble">${text}</div>`;
+  msgs.appendChild(wrap);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping() {
+  const msgs = document.getElementById('chat-messages');
+  const typing = document.createElement('div');
+  typing.className = 'chat-msg bot';
+  typing.id = 'typing-indicator';
+  typing.innerHTML = `<div class="chat-bubble" style="background:rgba(37,99,235,0.18); border:1px solid rgba(56,189,248,0.15); padding:0.7rem 1rem; border-radius:2px 10px 10px 10px;"><div class="chat-typing"><span></span><span></span><span></span></div></div>`;
+  msgs.appendChild(typing);
+  msgs.scrollTop = msgs.scrollHeight;
+  return typing;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typing-indicator');
+  if (t) t.remove();
+}
+
+function handleUserChoice(text) {
+  addUserMsg(text);
+  processMsg(text);
+}
+
+function sendUserMsg() {
+  const inp = document.getElementById('chat-input');
+  const text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+  addUserMsg(text);
+  processMsg(text);
+}
+
+function extractLead(raw) {
+  const m = raw.match(/<!--LEAD:([\s\S]*?)-->/);
+  if (!m) return { clean: raw.trim(), lead: null };
+  let lead = null;
+  try { lead = JSON.parse(m[1]); } catch (e) { lead = null; }
+  const clean = raw.replace(m[0], '').trim();
+  return { clean, lead };
+}
+
+function showWhatsAppCTA() {
+  if (waButtonShown) return;
+  waButtonShown = true;
+  const msgs = document.getElementById('chat-messages');
+  const waWrap = document.createElement('div');
+  waWrap.className = 'chat-msg bot';
+
+  const parts = [];
+  if (chatState.nombre) parts.push(`Nombre: ${chatState.nombre}`);
+  if (chatState.empresa) parts.push(`Empresa: ${chatState.empresa}`);
+  if (chatState.telefono) parts.push(`Tel: ${chatState.telefono}`);
+  if (chatState.tipo) parts.push(`Proyecto: ${chatState.tipo}`);
+  if (chatState.metros) parts.push(`m²: ${chatState.metros}`);
+  if (chatState.ciudad) parts.push(`Ciudad: ${chatState.ciudad}`);
+  if (chatState.trafico) parts.push(`Tránsito: ${chatState.trafico}`);
+  const summary = parts.length
+    ? parts.join(' | ')
+    : chatHistory.filter(m => m.role === 'user').map(m => m.content).join(' | ');
+
+  const waUrl = `https://wa.me/584140000000?text=${encodeURIComponent('Hola! Fui asesorado por el chat IA de Piso Modular 3D.\n\n' + summary)}`;
+  waWrap.innerHTML = `<a href="${waUrl}" target="_blank" class="btn btn-whatsapp" style="font-size:0.8rem; padding:10px 16px; display:inline-flex;">💬 Continuar por WhatsApp</a>`;
+  msgs.appendChild(waWrap);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+async function processMsg(userText) {
+  chatHistory.push({ role: 'user', content: userText });
+  const typing = showTyping();
+
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        system: SYSTEM_PROMPT,
+        messages: chatHistory
+      })
+    });
+
+    const data = await response.json();
+    removeTyping();
+
+    if (!response.ok || data.error) {
+      addBotMsg('Lo siento, ocurrió un error de conexión. Por favor escríbenos directamente por WhatsApp para continuar.');
+      console.error(data.error || response.statusText);
+      return;
+    }
+
+    const raw = data.reply || 'Disculpa, ocurrió un error. Escríbenos directamente por WhatsApp.';
+    chatHistory.push({ role: 'assistant', content: raw });
+
+    const { clean, lead } = extractLead(raw);
+    addBotMsg(clean);
+
+    if (lead) {
+      Object.keys(lead).forEach(k => { if (lead[k]) chatState[k] = lead[k]; });
+    }
+
+    const tieneDatos = chatState.tipo && (chatState.nombre || chatState.telefono);
+    if (tieneDatos || chatHistory.length >= 14) {
+      setTimeout(showWhatsAppCTA, 400);
+    }
+
+  } catch (err) {
+    removeTyping();
+    addBotMsg('Lo siento, ocurrió un error de conexión. Por favor escríbenos directamente por WhatsApp para continuar.');
+    console.error(err);
+  }
+}
+</script>
+</body>
+</html>
