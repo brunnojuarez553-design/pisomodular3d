@@ -1741,7 +1741,20 @@ footer {
   text-transform: uppercase;
 }
 
-/* ─── RESPONSIVE ─── */
+.colors-mobile-section {
+  display: none;
+  margin: 2rem 0 0;
+}
+
+.colors-mobile-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.colors-mobile-section .color-card img {
+  height: 70px;
+}
 @media (max-width: 1024px) {
   .benefits-intro { grid-template-columns: 1fr; }
   .benefits-visual { display: none; }
@@ -1806,6 +1819,9 @@ footer {
   .gallery-filters { gap: 0.35rem; }
   .filter-btn { font-size: 0.6rem; padding: 6px 12px; }
 
+  /* COLORS MOBILE */
+  .colors-mobile-section { display: block; }
+
   /* TESTIMONIALS */
   .testimonials-grid { grid-template-columns: 1fr; }
 
@@ -1854,7 +1870,16 @@ footer {
   .apps-grid { grid-template-columns: 1fr; }
 
   /* GALLERY */
-  .gallery-grid { grid-template-columns: 1fr; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 130px;
+    gap: 0.5rem;
+  }
+  .gallery-item { aspect-ratio: unset; }
+  .gallery-item:nth-child(1) { grid-column: 1 / 3; grid-row: span 2; }
+  .gallery-item:nth-child(4) { grid-column: 1 / 3; grid-row: span 1; }
+  .gallery-item:nth-child(7) { grid-column: 2; grid-row: span 2; }
 
   /* DISTRIBUTORS */
   .dist-benefits { grid-template-columns: 1fr; }
@@ -2271,6 +2296,52 @@ footer {
       </div>
     </div>
 
+    <!-- COLORES - visible solo en mobile -->
+    <div class="colors-mobile-section fade-in">
+      <div style="font-family:var(--font-mono); font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; color:rgba(148,163,184,0.6); margin-bottom:1rem;">🎨 Colores Disponibles</div>
+      <div class="colors-mobile-grid">
+        <div class="color-card">
+          <img src="https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_160,h_120,c_fill/v1781814011/IMG_7891_fvwoef.jpg" alt="Rojo">
+          <div class="color-lbl">Rojo</div>
+          <div class="color-name">Rojo</div>
+        </div>
+        <div class="color-card">
+          <img src="https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_160,h_120,c_fill/v1781814010/IMG_7889_dausrl.jpg" alt="Negro">
+          <div class="color-lbl">Negro</div>
+          <div class="color-name">Negro</div>
+        </div>
+        <div class="color-card">
+          <img src="https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_160,h_120,c_fill/v1781814010/IMG_7892_gov3md.jpg" alt="Azul">
+          <div class="color-lbl">Azul</div>
+          <div class="color-name">Azul</div>
+        </div>
+        <div class="color-card">
+          <img src="https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_160,h_120,c_fill/v1781814009/IMG_7890_pfhfkz.jpg" alt="Blanco">
+          <div class="color-lbl">Blanco</div>
+          <div class="color-name">Blanco</div>
+        </div>
+        <div class="color-card">
+          <img src="https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_160,h_120,c_fill/v1781814009/IMG_7887_kzfyzk.jpg" alt="Gris">
+          <div class="color-lbl">Gris</div>
+          <div class="color-name">Gris</div>
+        </div>
+        <div class="color-card">
+          <img src="https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_160,h_120,c_fill/v1781814009/IMG_7886_bmdnke.jpg" alt="Verde">
+          <div class="color-lbl">Verde</div>
+          <div class="color-name">Verde</div>
+        </div>
+        <div class="color-card">
+          <img src="https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_160,h_120,c_fill/v1781814009/IMG_7893_nfb9dk.jpg" alt="Amarillo Fluor">
+          <div class="color-lbl">Amarillo</div>
+          <div class="color-name">Amarillo Fluor</div>
+        </div>
+        <div style="border-radius:6px; border:1px dashed rgba(14,165,233,0.2); background:rgba(14,165,233,0.04); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.3rem; cursor:pointer; min-height:calc(70px + 1.6rem);" onclick="window.open('https://wa.me/584140000000?text=Hola,%20quiero%20ver%20los%20colores%20disponibles','_blank')">
+          <div style="font-size:1.1rem;">🎨</div>
+          <div style="font-family:var(--font-mono); font-size:0.55rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(14,165,233,0.7); text-align:center; line-height:1.4;">Más<br>colores</div>
+        </div>
+      </div>
+    </div>
+
     <div class="benefits-grid fade-in">
       <div class="benefit-card">
         <div class="benefit-icon">🏋️</div>
@@ -2603,67 +2674,8 @@ footer {
     </div>
     <div class="gallery-filters">
       <button class="filter-btn active" onclick="filterGallery('all', this)">Todos</button>
-      <button class="filter-btn" onclick="filterGallery('taller', this)">Talleres</button>
-      <button class="filter-btn" onclick="filterGallery('piscina', this)">Piscinas</button>
-      <button class="filter-btn" onclick="filterGallery('gimnasio', this)">Gimnasios</button>
-      <button class="filter-btn" onclick="filterGallery('industrial', this)">Industriales</button>
-      <button class="filter-btn" onclick="filterGallery('cancha', this)">Canchas</button>
     </div>
     <div class="gallery-grid" id="gallery-grid">
-      <div class="gallery-item" data-cat="taller" onclick="openLightbox('taller1')" style="background:linear-gradient(135deg,#1a1a2e,#0f0f1e);">
-        🔧
-        <div class="gallery-item-overlay">
-          <div class="gallery-item-info">
-            <div class="gallery-item-title">Taller AutoPro</div>
-            <div class="gallery-item-loc">📍 Caracas · 280 m²</div>
-          </div>
-        </div>
-      </div>
-      <div class="gallery-item" data-cat="piscina" onclick="openLightbox('piscina1')" style="background:linear-gradient(135deg,#0c2a4a,#0a1628);">
-        🏊
-        <div class="gallery-item-overlay">
-          <div class="gallery-item-info">
-            <div class="gallery-item-title">Club Náutico VIP</div>
-            <div class="gallery-item-loc">📍 Valencia · 150 m²</div>
-          </div>
-        </div>
-      </div>
-      <div class="gallery-item" data-cat="gimnasio" onclick="openLightbox('gym1')" style="background:linear-gradient(135deg,#1a0a2e,#0f0620);">
-        💪
-        <div class="gallery-item-overlay">
-          <div class="gallery-item-info">
-            <div class="gallery-item-title">Elite Fitness Center</div>
-            <div class="gallery-item-loc">📍 Maracaibo · 420 m²</div>
-          </div>
-        </div>
-      </div>
-      <div class="gallery-item" data-cat="cancha" onclick="openLightbox('cancha1')" style="background:linear-gradient(135deg,#0a1a2e,#050d1a);">
-        ⚽
-        <div class="gallery-item-overlay">
-          <div class="gallery-item-info">
-            <div class="gallery-item-title">Cancha Polideportiva</div>
-            <div class="gallery-item-loc">📍 Maracay · 600 m²</div>
-          </div>
-        </div>
-      </div>
-      <div class="gallery-item" data-cat="industrial" onclick="openLightbox('ind1')" style="background:linear-gradient(135deg,#1a0c0c,#0f0808);">
-        🏭
-        <div class="gallery-item-overlay">
-          <div class="gallery-item-info">
-            <div class="gallery-item-title">Almacén Industrial</div>
-            <div class="gallery-item-loc">📍 Barquisimeto · 1.200 m²</div>
-          </div>
-        </div>
-      </div>
-      <div class="gallery-item" data-cat="taller" onclick="openLightbox('taller2')" style="background:linear-gradient(135deg,#1a1a2e,#0f0f1e);">
-        🚗
-        <div class="gallery-item-overlay">
-          <div class="gallery-item-info">
-            <div class="gallery-item-title">Autolavado Premium</div>
-            <div class="gallery-item-loc">📍 Caracas · 180 m²</div>
-          </div>
-        </div>
-      </div>
       <div class="gallery-item" data-cat="otros" onclick="openLightbox('proy1')" style="background-image:url('https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_600/v1781814779/IMG_7895_b3grnl.jpg'); background-size:cover; background-position:center;"></div>
       <div class="gallery-item" data-cat="otros" onclick="openLightbox('proy2')" style="background-image:url('https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_600/v1781814013/IMG_7882_r2jvkv.jpg'); background-size:cover; background-position:center;"></div>
       <div class="gallery-item" data-cat="otros" onclick="openLightbox('proy3')" style="background-image:url('https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,w_600/v1781814022/IMG_7883_g4ddni.jpg'); background-size:cover; background-position:center;"></div>
@@ -2895,7 +2907,9 @@ footer {
 <div id="ai-chat-window">
   <div class="chat-header">
     <div class="chat-header-info">
-      <div class="chat-avatar">🤖</div>
+      <div class="chat-avatar" style="background:transparent; border:1px solid rgba(56,189,248,0.2); overflow:hidden; padding:2px;">
+        <img src="https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,h_50/v1781812406/IMG_7880_qa4e04_h9kpdg.png" alt="Piso Modular 3D" style="width:100%; height:100%; object-fit:contain; display:block;">
+      </div>
       <div>
         <div class="chat-name">Asesor IA · Piso Modular 3D</div>
         <div class="chat-status">En línea ahora</div>
