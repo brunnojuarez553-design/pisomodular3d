@@ -1787,6 +1787,7 @@ footer {
   .stat-item + .stat-item::before { display: none; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .stat-number { font-size: 2rem; }
+  #stats { display: none; }
 
   /* ABOUT */
   #about .about-grid { grid-template-columns: 1fr !important; }
@@ -2900,7 +2901,9 @@ footer {
 
 <div id="ai-concierge-btn">
   <span class="ai-btn-label">Asesor IA</span>
-  <div class="ai-btn-circle" onclick="toggleChat()" title="Asesor Virtual IA">🤖</div>
+  <div class="ai-btn-circle" onclick="toggleChat()" title="Asesor Virtual IA" style="overflow:hidden; padding:6px;">
+    <img src="https://res.cloudinary.com/dpiavcukm/image/upload/f_auto,q_auto,h_50/v1781812406/IMG_7880_qa4e04_h9kpdg.png" alt="Piso Modular 3D" style="width:100%; height:100%; object-fit:contain; display:block;">
+  </div>
 </div>
 
 <!-- Chat Window -->
