@@ -867,6 +867,8 @@ section { position: relative; z-index: 1; }
 }
 .module-cell.active .dot { background: rgba(56,189,248,0.6); }
 
+.benefits-mobile-label { display: none; }
+
 .benefits-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -2054,8 +2056,27 @@ footer {
   /* BENEFITS */
   .benefits-intro { grid-template-columns: 1fr; }
   .benefits-visual { display: none; }
-  .benefits-grid { grid-template-columns: 1fr 1fr; gap: 1px; }
-  .benefit-card { padding: 0.9rem; }
+  .benefits-mobile-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(148,163,184,0.6);
+    margin: 2.5rem 0 1rem;
+  }
+  .benefits-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+    background: none;
+    border: none;
+  }
+  .benefit-card {
+    padding: 0.9rem;
+    border-radius: var(--radius);
+    background: var(--bg-card);
+    border: 1px solid rgba(56,189,248,0.1);
+  }
   .benefit-icon { width: 34px; height: 34px; font-size: 1rem; margin-bottom: 0.6rem; }
   .benefit-title { font-size: 0.78rem; margin-bottom: 0.3rem; }
   .benefit-desc {
@@ -2763,6 +2784,7 @@ footer {
       </div>
     </div>
 
+    <div class="benefits-mobile-label">⚙ Especificaciones Técnicas</div>
     <div class="benefits-grid fade-in">
       <div class="benefit-card">
         <div class="benefit-icon">🏋️</div>
