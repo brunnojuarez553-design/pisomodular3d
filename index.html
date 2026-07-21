@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-<link rel="preload" as="video" href="https://res.cloudinary.com/dpiavcukm/video/upload/f_auto,q_auto,w_1080,ac_none/v1781814786/insta_video_76229_sgthha.mp4" type="video/mp4" media="(min-width: 769px)">
+<link rel="preload" as="video" href="https://res.cloudinary.com/dpiavcukm/video/upload/f_auto,q_auto,w_1080,ac_none/v1781814786/insta_video_76229_sgthha.mp4" type="video/mp4" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&family=Inter:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -2352,25 +2352,12 @@ footer{background:#05070a!important;border-top:1px solid rgba(255,255,255,.07)}
 <!-- ══════════════════════════════════════════════ -->
 <section id="hero">
   <div class="hero-video-wrap">
-    <video id="hero-bg-video" autoplay muted loop playsinline
+    <video id="hero-bg-video" autoplay muted loop playsinline preload="auto" fetchpriority="high"
       poster="https://res.cloudinary.com/dpiavcukm/video/upload/so_1,f_jpg,q_auto,w_1080/v1781814786/insta_video_76229_sgthha.jpg"
-      data-src="https://res.cloudinary.com/dpiavcukm/video/upload/f_auto,q_auto,w_1080,ac_none/v1781814786/insta_video_76229_sgthha.mp4"
+      src="https://res.cloudinary.com/dpiavcukm/video/upload/f_auto,q_auto,w_1080,ac_none/v1781814786/insta_video_76229_sgthha.mp4"
       onerror="this.style.display='none'"
     ></video>
   </div>
-  <script>
-    (function () {
-      var v = document.getElementById('hero-bg-video');
-      if (window.matchMedia('(min-width: 769px)').matches) {
-        v.setAttribute('preload', 'auto');
-        v.setAttribute('fetchpriority', 'high');
-        v.src = v.dataset.src;
-      } else {
-        // En mobile no bajamos el video: se queda con el poster (imagen liviana)
-        v.removeAttribute('data-src');
-      }
-    })();
-  </script>
 
   <div class="hero-content">
     <div class="hero-badge">
