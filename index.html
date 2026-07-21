@@ -8,6 +8,8 @@
 <title>Piso Modular 3D | Pisos de Alta Resistencia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+<link rel="preload" as="video" href="https://res.cloudinary.com/dpiavcukm/video/upload/f_auto,q_auto,w_1080,ac_none/v1781814786/insta_video_76229_sgthha.mp4" type="video/mp4">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&family=Inter:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -2052,8 +2054,18 @@ footer {
   /* BENEFITS */
   .benefits-intro { grid-template-columns: 1fr; }
   .benefits-visual { display: none; }
-  .benefits-grid { grid-template-columns: 1fr 1fr; }
-  .benefit-card { padding: 1.25rem; }
+  .benefits-grid { grid-template-columns: 1fr 1fr; gap: 1px; }
+  .benefit-card { padding: 0.9rem; }
+  .benefit-icon { width: 34px; height: 34px; font-size: 1rem; margin-bottom: 0.6rem; }
+  .benefit-title { font-size: 0.78rem; margin-bottom: 0.3rem; }
+  .benefit-desc {
+    font-size: 0.68rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 
   /* SIMULATOR */
   .simulator-wrap { grid-template-columns: 1fr; }
@@ -2128,7 +2140,10 @@ footer {
   .stats-grid { grid-template-columns: 1fr 1fr; }
 
   /* BENEFITS */
-  .benefits-grid { grid-template-columns: 1fr; }
+  .benefit-card { padding: 0.75rem; }
+  .benefit-icon { width: 30px; height: 30px; font-size: 0.9rem; margin-bottom: 0.45rem; }
+  .benefit-title { font-size: 0.72rem; }
+  .benefit-desc { font-size: 0.64rem; -webkit-line-clamp: 2; }
 
   /* SIMULATOR */
   .sim-row { grid-template-columns: 1fr; }
@@ -2184,7 +2199,7 @@ footer {
     <li><a href="#applications">Aplicaciones</a></li>
     <li><a href="#gallery">Proyectos</a></li>
     <li><a href="#distributors">Distribuidores</a></li>
-    <li><a href="https://wa.me/584140000000?text=Hola,%20quiero%20información%20sobre%20pisos%20modulares" target="_blank" class="nav-cta">Cotizar</a></li>
+    <li><a href="https://wa.me/584148148570?text=Hola,%20quiero%20información%20sobre%20pisos%20modulares" target="_blank" class="nav-cta">Cotizar</a></li>
   </ul>
   <button class="hamburger" id="hamburger-btn" onclick="toggleMenu()" aria-label="Menú">
     <span></span><span></span><span></span>
@@ -2204,7 +2219,7 @@ footer {
     </nav>
   </div>
   <div class="mobile-menu-footer">
-    <a href="https://wa.me/584140000000?text=Hola,%20quiero%20información%20sobre%20pisos%20modulares" target="_blank" class="mobile-menu-wa-btn" onclick="toggleMenu()" aria-label="Hablar por WhatsApp">
+    <a href="https://wa.me/584148148570?text=Hola,%20quiero%20información%20sobre%20pisos%20modulares" target="_blank" class="mobile-menu-wa-btn" onclick="toggleMenu()" aria-label="Hablar por WhatsApp">
       <svg viewBox="0 0 32 32" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M16.004 3C9.06 3 3.43 8.63 3.43 15.573c0 2.45.68 4.738 1.86 6.69L3 29l6.9-2.246a12.5 12.5 0 0 0 6.104 1.577h.005c6.943 0 12.573-5.63 12.573-12.573C28.582 8.816 22.947 3 16.004 3Zm0 22.86a10.22 10.22 0 0 1-5.213-1.43l-.374-.222-3.867 1.258 1.276-3.77-.244-.388a10.234 10.234 0 0 1-1.575-5.467c0-5.663 4.61-10.273 10.28-10.273 2.748 0 5.328 1.07 7.27 3.014a10.213 10.213 0 0 1 3.008 7.273c0 5.663-4.608 10.273-10.28 10.273Zm5.633-7.699c-.31-.155-1.83-.902-2.113-1.005-.283-.104-.489-.155-.696.155-.207.31-.798 1.005-.978 1.212-.18.207-.36.233-.669.078-.31-.155-1.307-.482-2.489-1.535-.92-.82-1.542-1.833-1.722-2.143-.18-.31-.02-.478.135-.632.14-.14.31-.362.465-.543.155-.181.207-.31.31-.517.104-.207.052-.388-.026-.543-.078-.155-.696-1.68-.954-2.302-.251-.604-.507-.522-.696-.532l-.593-.01c-.207 0-.543.078-.827.388-.284.31-1.084 1.06-1.084 2.583s1.11 2.997 1.264 3.204c.155.207 2.185 3.337 5.293 4.68.74.32 1.317.51 1.767.653.742.236 1.418.203 1.952.123.596-.089 1.83-.748 2.087-1.47.258-.723.258-1.343.181-1.47-.078-.129-.284-.207-.594-.362Z"/></svg>
     </a>
     <div class="mobile-menu-contact">Fabricante en Venezuela · Distribución Nacional e Internacional</div>
@@ -2216,7 +2231,7 @@ footer {
 <!-- ══════════════════════════════════════════════ -->
 <section id="hero">
   <div class="hero-video-wrap">
-    <video autoplay muted loop playsinline
+    <video autoplay muted loop playsinline preload="auto" fetchpriority="high"
       poster="https://res.cloudinary.com/dpiavcukm/video/upload/so_1,f_jpg,q_auto,w_1080/v1781814786/insta_video_76229_sgthha.jpg"
       src="https://res.cloudinary.com/dpiavcukm/video/upload/f_auto,q_auto,w_1080,ac_none/v1781814786/insta_video_76229_sgthha.mp4"
       onerror="this.style.display='none'"
@@ -2241,7 +2256,7 @@ footer {
       <a href="#simulator" class="btn btn-primary">
         <span>⚡</span> Solicitar Cotización
       </a>
-      <a href="https://wa.me/584140000000?text=Hola,%20quiero%20cotizar%20pisos%20modulares%20para%20mi%20proyecto" target="_blank" class="btn btn-whatsapp">
+      <a href="https://wa.me/584148148570?text=Hola,%20quiero%20cotizar%20pisos%20modulares%20para%20mi%20proyecto" target="_blank" class="btn btn-whatsapp">
         <span style="display:inline-flex;"><svg viewBox="0 0 32 32" width="1.1em" height="1.1em" fill="currentColor" aria-hidden="true"><path d="M16.004 3C9.06 3 3.43 8.63 3.43 15.573c0 2.45.68 4.738 1.86 6.69L3 29l6.9-2.246a12.5 12.5 0 0 0 6.104 1.577h.005c6.943 0 12.573-5.63 12.573-12.573C28.582 8.816 22.947 3 16.004 3Zm0 22.86a10.22 10.22 0 0 1-5.213-1.43l-.374-.222-3.867 1.258 1.276-3.77-.244-.388a10.234 10.234 0 0 1-1.575-5.467c0-5.663 4.61-10.273 10.28-10.273 2.748 0 5.328 1.07 7.27 3.014a10.213 10.213 0 0 1 3.008 7.273c0 5.663-4.608 10.273-10.28 10.273Zm5.633-7.699c-.31-.155-1.83-.902-2.113-1.005-.283-.104-.489-.155-.696.155-.207.31-.798 1.005-.978 1.212-.18.207-.36.233-.669.078-.31-.155-1.307-.482-2.489-1.535-.92-.82-1.542-1.833-1.722-2.143-.18-.31-.02-.478.135-.632.14-.14.31-.362.465-.543.155-.181.207-.31.31-.517.104-.207.052-.388-.026-.543-.078-.155-.696-1.68-.954-2.302-.251-.604-.507-.522-.696-.532l-.593-.01c-.207 0-.543.078-.827.388-.284.31-1.084 1.06-1.084 2.583s1.11 2.997 1.264 3.204c.155.207 2.185 3.337 5.293 4.68.74.32 1.317.51 1.767.653.742.236 1.418.203 1.952.123.596-.089 1.83-.748 2.087-1.47.258-.723.258-1.343.181-1.47-.078-.129-.284-.207-.594-.362Z"/></svg></span> Hablar por WhatsApp
       </a>
     </div>
@@ -2488,11 +2503,132 @@ footer {
           <div style="font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(14,165,233,0.7); margin-bottom:1rem;">Nuestra misión</div>
           <p style="font-size:0.95rem; color:rgba(248,250,252,0.85); line-height:1.8; font-style:italic; margin:0;">"Democratizar el acceso a pisos industriales de alta calidad en Venezuela y Latinoamérica, ofreciendo soluciones modulares que combinan resistencia extrema, instalación simple y precio justo."</p>
         </div>
-        <a href="https://wa.me/584140000000?text=Hola,%20quiero%20saber%20más%20sobre%20Piso%20Modular%203D" target="_blank" class="btn btn-outline" style="align-self:flex-start;">
+        <a href="https://wa.me/584148148570?text=Hola,%20quiero%20saber%20más%20sobre%20Piso%20Modular%203D" target="_blank" class="btn btn-outline" style="align-self:flex-start;">
           Hablar con un asesor →
         </a>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- 5. APLICACIONES -->
+<!-- ══════════════════════════════════════════════ -->
+<section id="applications">
+  <div class="container">
+    <div class="fade-in">
+      <div class="section-label">Sectores de Aplicación</div>
+      <h2 class="section-title">Un piso para <span style="color:var(--blue-bright)">cada industria</span></h2>
+    </div>
+    <div class="apps-grid">
+      <div class="app-card fade-in">
+        <div class="app-card-img">
+          <div class="app-card-img-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/f_auto,q_auto,w_700,h_500,c_fill/v1784586621/taller_dpoawr.jpg'); background-size:cover; background-position:center;"></div>
+          <div class="app-card-overlay"></div>
+          <span class="app-card-cat">Talleres</span>
+        </div>
+        <div class="app-card-body">
+          <div class="app-card-title">Talleres Mecánicos</div>
+          <ul class="app-card-features">
+            <li>Resistente a aceites y combustibles</li>
+            <li>Fácil limpieza de derrames</li>
+            <li>Soporte para elevadores y prensas</li>
+            <li>Antideslizante con líquidos</li>
+          </ul>
+          <a href="https://wa.me/584148148570?text=Hola,%20necesito%20información%20de%20pisos%20para%20taller%20mecánico" target="_blank" class="btn btn-ghost" style="font-size:0.75rem; padding:9px 16px;">Cotizar para mi taller →</a>
+        </div>
+      </div>
+
+      <div class="app-card fade-in" style="transition-delay:0.1s">
+        <div class="app-card-img">
+          <div class="app-card-img-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/f_auto,q_auto,w_700,h_500,c_fill/v1784586620/pileta_bznq7u.jpg'); background-size:cover; background-position:center;"></div>
+          <div class="app-card-overlay"></div>
+          <span class="app-card-cat">Piscinas</span>
+        </div>
+        <div class="app-card-body">
+          <div class="app-card-title">Áreas de Piscina</div>
+          <ul class="app-card-features">
+            <li>100% resistente al agua y cloro</li>
+            <li>Antideslizante en mojado</li>
+            <li>Drenaje superior integrado</li>
+            <li>No retiene calor del sol</li>
+          </ul>
+          <a href="https://wa.me/584148148570?text=Hola,%20necesito%20pisos%20para%20área%20de%20piscina" target="_blank" class="btn btn-ghost" style="font-size:0.75rem; padding:9px 16px;">Cotizar para piscina →</a>
+        </div>
+      </div>
+
+      <div class="app-card fade-in" style="transition-delay:0.2s">
+        <div class="app-card-img">
+          <div class="app-card-img-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/f_auto,q_auto,w_700,h_500,c_fill/v1784586621/gimnasio_cn5g4y.jpg'); background-size:cover; background-position:center;"></div>
+          <div class="app-card-overlay"></div>
+          <span class="app-card-cat">Fitness</span>
+        </div>
+        <div class="app-card-body">
+          <div class="app-card-title">Gimnasios</div>
+          <ul class="app-card-features">
+            <li>Absorción de impacto de equipos</li>
+            <li>Superficie ergonómica</li>
+            <li>Fácil higienización</li>
+            <li>Disponible en varios colores</li>
+          </ul>
+          <a href="https://wa.me/584148148570?text=Hola,%20quiero%20pisos%20para%20mi%20gimnasio" target="_blank" class="btn btn-ghost" style="font-size:0.75rem; padding:9px 16px;">Cotizar para gym →</a>
+        </div>
+      </div>
+
+      <div class="app-card fade-in" style="transition-delay:0.1s">
+        <div class="app-card-img">
+          <div class="app-card-img-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/f_auto,q_auto,w_700,h_500,c_fill/v1784586620/industrial_qptuhc.webp'); background-size:cover; background-position:center;"></div>
+          <div class="app-card-overlay"></div>
+          <span class="app-card-cat">Industrial</span>
+        </div>
+        <div class="app-card-body">
+          <div class="app-card-title">Patios Industriales</div>
+          <ul class="app-card-features">
+            <li>Carga hasta 7 ton/m²</li>
+            <li>Instalación sin obra civil</li>
+            <li>Removible y reubicable</li>
+            <li>Resistente a intemperie</li>
+          </ul>
+          <a href="https://wa.me/584148148570?text=Hola,%20necesito%20pisos%20para%20patio%20industrial" target="_blank" class="btn btn-ghost" style="font-size:0.75rem; padding:9px 16px;">Cotizar industrial →</a>
+        </div>
+      </div>
+
+      <div class="app-card fade-in" style="transition-delay:0.2s">
+        <div class="app-card-img">
+          <div class="app-card-img-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/f_auto,q_auto,w_700,h_500,c_fill/v1784586620/autolavado_q700rg.jpg'); background-size:cover; background-position:center;"></div>
+          <div class="app-card-overlay"></div>
+          <span class="app-card-cat">Autolavado</span>
+        </div>
+        <div class="app-card-body">
+          <div class="app-card-title">Autolavados</div>
+          <ul class="app-card-features">
+            <li>Drenaje integrado de alta eficiencia</li>
+            <li>Resistente a jabones y químicos</li>
+            <li>Aspecto profesional y premium</li>
+            <li>Fácil reemplazo por sección</li>
+          </ul>
+          <a href="https://wa.me/584148148570?text=Hola,%20quiero%20pisos%20para%20autolavado" target="_blank" class="btn btn-ghost" style="font-size:0.75rem; padding:9px 16px;">Cotizar autolavado →</a>
+        </div>
+      </div>
+
+      <div class="app-card fade-in" style="transition-delay:0.3s">
+        <div class="app-card-img">
+          <div class="app-card-img-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/f_auto,q_auto,w_700,h_500,c_fill/v1784586620/canchas_pcnljw.jpg'); background-size:cover; background-position:center;"></div>
+          <div class="app-card-overlay"></div>
+          <span class="app-card-cat">Canchas</span>
+        </div>
+        <div class="app-card-body">
+          <div class="app-card-title">Canchas Deportivas</div>
+          <ul class="app-card-features">
+            <li>Superficie de alto rendimiento deportivo</li>
+            <li>Marcaje de líneas integrado</li>
+            <li>Amortigua impactos articulares</li>
+            <li>Varios deportes: basket, futsal, vóley</li>
+          </ul>
+          <a href="https://wa.me/584148148570?text=Hola,%20necesito%20pisos%20para%20cancha%20deportiva" target="_blank" class="btn btn-ghost" style="font-size:0.75rem; padding:9px 16px;">Cotizar cancha →</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -2572,7 +2708,7 @@ footer {
           </div>
 
           <!-- Slot vacío con CTA -->
-          <div style="border-radius:6px; border:1px dashed rgba(14,165,233,0.2); background:rgba(14,165,233,0.04); display:flex; flex-direction:column; align-items:center; justify-content:center; height:calc(80px + 1.6rem); gap:0.3rem; cursor:pointer;" onclick="window.open('https://wa.me/584140000000?text=Hola,%20quiero%20ver%20los%20colores%20disponibles','_blank')">
+          <div style="border-radius:6px; border:1px dashed rgba(14,165,233,0.2); background:rgba(14,165,233,0.04); display:flex; flex-direction:column; align-items:center; justify-content:center; height:calc(80px + 1.6rem); gap:0.3rem; cursor:pointer;" onclick="window.open('https://wa.me/584148148570?text=Hola,%20quiero%20ver%20los%20colores%20disponibles','_blank')">
             <div style="font-size:1.1rem;">🎨</div>
             <div style="font-family:var(--font-mono); font-size:0.55rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(14,165,233,0.7); text-align:center; line-height:1.4;">Más<br>colores</div>
           </div>
@@ -2620,7 +2756,7 @@ footer {
           <div class="color-lbl">Amarillo</div>
           <div class="color-name">Amarillo Fluor</div>
         </div>
-        <div style="border-radius:6px; border:1px dashed rgba(14,165,233,0.2); background:rgba(14,165,233,0.04); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.3rem; cursor:pointer; min-height:calc(70px + 1.6rem);" onclick="window.open('https://wa.me/584140000000?text=Hola,%20quiero%20ver%20los%20colores%20disponibles','_blank')">
+        <div style="border-radius:6px; border:1px dashed rgba(14,165,233,0.2); background:rgba(14,165,233,0.04); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.3rem; cursor:pointer; min-height:calc(70px + 1.6rem);" onclick="window.open('https://wa.me/584148148570?text=Hola,%20quiero%20ver%20los%20colores%20disponibles','_blank')">
           <div style="font-size:1.1rem;">🎨</div>
           <div style="font-family:var(--font-mono); font-size:0.55rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(14,165,233,0.7); text-align:center; line-height:1.4;">Más<br>colores</div>
         </div>
@@ -2759,126 +2895,6 @@ footer {
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════ -->
-<!-- 5. APLICACIONES -->
-<!-- ══════════════════════════════════════════════ -->
-<section id="applications">
-  <div class="container">
-    <div class="fade-in">
-      <div class="section-label">Sectores de Aplicación</div>
-      <h2 class="section-title">Un piso para <span style="color:var(--blue-bright)">cada industria</span></h2>
-    </div>
-    <div class="apps-grid">
-      <div class="app-card fade-in">
-        <div class="app-card-img">
-          <div class="app-card-img-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/f_auto,q_auto,w_700,h_500,c_fill/v1784586621/taller_dpoawr.jpg'); background-size:cover; background-position:center;"></div>
-          <div class="app-card-overlay"></div>
-          <span class="app-card-cat">Talleres</span>
-        </div>
-        <div class="app-card-body">
-          <div class="app-card-title">Talleres Mecánicos</div>
-          <ul class="app-card-features">
-            <li>Resistente a aceites y combustibles</li>
-            <li>Fácil limpieza de derrames</li>
-            <li>Soporte para elevadores y prensas</li>
-            <li>Antideslizante con líquidos</li>
-          </ul>
-          <a href="https://wa.me/584140000000?text=Hola,%20necesito%20información%20de%20pisos%20para%20taller%20mecánico" target="_blank" class="btn btn-ghost" style="font-size:0.75rem; padding:9px 16px;">Cotizar para mi taller →</a>
-        </div>
-      </div>
-
-      <div class="app-card fade-in" style="transition-delay:0.1s">
-        <div class="app-card-img">
-          <div class="app-card-img-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/f_auto,q_auto,w_700,h_500,c_fill/v1784586620/pileta_bznq7u.jpg'); background-size:cover; background-position:center;"></div>
-          <div class="app-card-overlay"></div>
-          <span class="app-card-cat">Piscinas</span>
-        </div>
-        <div class="app-card-body">
-          <div class="app-card-title">Áreas de Piscina</div>
-          <ul class="app-card-features">
-            <li>100% resistente al agua y cloro</li>
-            <li>Antideslizante en mojado</li>
-            <li>Drenaje superior integrado</li>
-            <li>No retiene calor del sol</li>
-          </ul>
-          <a href="https://wa.me/584140000000?text=Hola,%20necesito%20pisos%20para%20área%20de%20piscina" target="_blank" class="btn btn-ghost" style="font-size:0.75rem; padding:9px 16px;">Cotizar para piscina →</a>
-        </div>
-      </div>
-
-      <div class="app-card fade-in" style="transition-delay:0.2s">
-        <div class="app-card-img">
-          <div class="app-card-img-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/f_auto,q_auto,w_700,h_500,c_fill/v1784586621/gimnasio_cn5g4y.jpg'); background-size:cover; background-position:center;"></div>
-          <div class="app-card-overlay"></div>
-          <span class="app-card-cat">Fitness</span>
-        </div>
-        <div class="app-card-body">
-          <div class="app-card-title">Gimnasios</div>
-          <ul class="app-card-features">
-            <li>Absorción de impacto de equipos</li>
-            <li>Superficie ergonómica</li>
-            <li>Fácil higienización</li>
-            <li>Disponible en varios colores</li>
-          </ul>
-          <a href="https://wa.me/584140000000?text=Hola,%20quiero%20pisos%20para%20mi%20gimnasio" target="_blank" class="btn btn-ghost" style="font-size:0.75rem; padding:9px 16px;">Cotizar para gym →</a>
-        </div>
-      </div>
-
-      <div class="app-card fade-in" style="transition-delay:0.1s">
-        <div class="app-card-img">
-          <div class="app-card-img-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/f_auto,q_auto,w_700,h_500,c_fill/v1784586620/industrial_qptuhc.webp'); background-size:cover; background-position:center;"></div>
-          <div class="app-card-overlay"></div>
-          <span class="app-card-cat">Industrial</span>
-        </div>
-        <div class="app-card-body">
-          <div class="app-card-title">Patios Industriales</div>
-          <ul class="app-card-features">
-            <li>Carga hasta 7 ton/m²</li>
-            <li>Instalación sin obra civil</li>
-            <li>Removible y reubicable</li>
-            <li>Resistente a intemperie</li>
-          </ul>
-          <a href="https://wa.me/584140000000?text=Hola,%20necesito%20pisos%20para%20patio%20industrial" target="_blank" class="btn btn-ghost" style="font-size:0.75rem; padding:9px 16px;">Cotizar industrial →</a>
-        </div>
-      </div>
-
-      <div class="app-card fade-in" style="transition-delay:0.2s">
-        <div class="app-card-img">
-          <div class="app-card-img-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/f_auto,q_auto,w_700,h_500,c_fill/v1784586620/autolavado_q700rg.jpg'); background-size:cover; background-position:center;"></div>
-          <div class="app-card-overlay"></div>
-          <span class="app-card-cat">Autolavado</span>
-        </div>
-        <div class="app-card-body">
-          <div class="app-card-title">Autolavados</div>
-          <ul class="app-card-features">
-            <li>Drenaje integrado de alta eficiencia</li>
-            <li>Resistente a jabones y químicos</li>
-            <li>Aspecto profesional y premium</li>
-            <li>Fácil reemplazo por sección</li>
-          </ul>
-          <a href="https://wa.me/584140000000?text=Hola,%20quiero%20pisos%20para%20autolavado" target="_blank" class="btn btn-ghost" style="font-size:0.75rem; padding:9px 16px;">Cotizar autolavado →</a>
-        </div>
-      </div>
-
-      <div class="app-card fade-in" style="transition-delay:0.3s">
-        <div class="app-card-img">
-          <div class="app-card-img-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/f_auto,q_auto,w_700,h_500,c_fill/v1784586620/canchas_pcnljw.jpg'); background-size:cover; background-position:center;"></div>
-          <div class="app-card-overlay"></div>
-          <span class="app-card-cat">Canchas</span>
-        </div>
-        <div class="app-card-body">
-          <div class="app-card-title">Canchas Deportivas</div>
-          <ul class="app-card-features">
-            <li>Superficie de alto rendimiento deportivo</li>
-            <li>Marcaje de líneas integrado</li>
-            <li>Amortigua impactos articulares</li>
-            <li>Varios deportes: basket, futsal, vóley</li>
-          </ul>
-          <a href="https://wa.me/584140000000?text=Hola,%20necesito%20pisos%20para%20cancha%20deportiva" target="_blank" class="btn btn-ghost" style="font-size:0.75rem; padding:9px 16px;">Cotizar cancha →</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ══════════════════════════════════════════════ -->
 <!-- 6. COMPARATIVA -->
@@ -3123,7 +3139,7 @@ footer {
       </h2>
       <p class="cta-sub">Análisis técnico gratuito, visita a tu proyecto sin costo y propuesta en menos de 24 horas. Miles de m² instalados nos respaldan.</p>
       <div class="cta-buttons">
-        <a href="https://wa.me/584140000000?text=Hola,%20quiero%20una%20cotización%20personalizada%20de%20Piso%20Modular%203D%20para%20mi%20proyecto" target="_blank" class="btn btn-whatsapp" style="font-size:1.05rem; padding:16px 32px;">
+        <a href="https://wa.me/584148148570?text=Hola,%20quiero%20una%20cotización%20personalizada%20de%20Piso%20Modular%203D%20para%20mi%20proyecto" target="_blank" class="btn btn-whatsapp" style="font-size:1.05rem; padding:16px 32px;">
           <svg viewBox="0 0 32 32" width="1.1em" height="1.1em" fill="currentColor" style="vertical-align:-0.15em; margin-right:0.35em;" aria-hidden="true"><path d="M16.004 3C9.06 3 3.43 8.63 3.43 15.573c0 2.45.68 4.738 1.86 6.69L3 29l6.9-2.246a12.5 12.5 0 0 0 6.104 1.577h.005c6.943 0 12.573-5.63 12.573-12.573C28.582 8.816 22.947 3 16.004 3Zm0 22.86a10.22 10.22 0 0 1-5.213-1.43l-.374-.222-3.867 1.258 1.276-3.77-.244-.388a10.234 10.234 0 0 1-1.575-5.467c0-5.663 4.61-10.273 10.28-10.273 2.748 0 5.328 1.07 7.27 3.014a10.213 10.213 0 0 1 3.008 7.273c0 5.663-4.608 10.273-10.28 10.273Zm5.633-7.699c-.31-.155-1.83-.902-2.113-1.005-.283-.104-.489-.155-.696.155-.207.31-.798 1.005-.978 1.212-.18.207-.36.233-.669.078-.31-.155-1.307-.482-2.489-1.535-.92-.82-1.542-1.833-1.722-2.143-.18-.31-.02-.478.135-.632.14-.14.31-.362.465-.543.155-.181.207-.31.31-.517.104-.207.052-.388-.026-.543-.078-.155-.696-1.68-.954-2.302-.251-.604-.507-.522-.696-.532l-.593-.01c-.207 0-.543.078-.827.388-.284.31-1.084 1.06-1.084 2.583s1.11 2.997 1.264 3.204c.155.207 2.185 3.337 5.293 4.68.74.32 1.317.51 1.767.653.742.236 1.418.203 1.952.123.596-.089 1.83-.748 2.087-1.47.258-.723.258-1.343.181-1.47-.078-.129-.284-.207-.594-.362Z"/></svg> Escribir por WhatsApp
         </a>
         <a href="#simulator" class="btn btn-primary" style="font-size:1.05rem; padding:16px 32px;">
@@ -3171,8 +3187,8 @@ footer {
       <div class="footer-col">
         <h4>Contacto</h4>
         <ul>
-          <li><a href="https://wa.me/584140000000" target="_blank">💬 WhatsApp</a></li>
-          <li><a href="mailto:info@pisomodular3d.com">📧 Email</a></li>
+          <li><a href="https://wa.me/584148148570" target="_blank">💬 WhatsApp</a></li>
+          <li><a href="mailto:grupohuracan@gmail.com">📧 Email</a></li>
           <li><a href="#">📍 Caracas, Venezuela</a></li>
           <li><a href="#distributors">🤝 Distribuidores</a></li>
         </ul>
@@ -3443,7 +3459,7 @@ function calcular() {
   document.getElementById('r-precio').textContent = 'Consultar';
 
   // Update CTA
-  const wa = `https://wa.me/584140000000?text=Hola!%20Usé%20el%20simulador%20de%20Piso%20Modular%203D%20y%20obtuve%20estos%20datos:%0A%0A▸%20Tipo%20de%20proyecto:%20${tipo}%0A▸%20Superficie:%20${m2.toFixed(1)}%20m²%0A▸%20Módulos%20aprox:%20${modulos}%0A▸%20Tránsito:%20${trafico}%0A%0AMe%20gustaría%20una%20cotización%20exacta%20🙏`;
+  const wa = `https://wa.me/584148148570?text=Hola!%20Usé%20el%20simulador%20de%20Piso%20Modular%203D%20y%20obtuve%20estos%20datos:%0A%0A▸%20Tipo%20de%20proyecto:%20${tipo}%0A▸%20Superficie:%20${m2.toFixed(1)}%20m²%0A▸%20Módulos%20aprox:%20${modulos}%0A▸%20Tránsito:%20${trafico}%0A%0AMe%20gustaría%20una%20cotización%20exacta%20🙏`;
   document.getElementById('sim-cta').href = wa;
 }
 calcular();
@@ -3568,7 +3584,7 @@ function enviarDistribuidor() {
   const ciudad = document.querySelector('.dist-form .form-input:nth-of-type(3)').value;
   const tel = document.querySelector('.dist-form .form-input:nth-of-type(4)').value;
   const msg = `Hola!%20Quiero%20ser%20distribuidor%20de%20Piso%20Modular%203D.%0A%0AℹNombre:%20${encodeURIComponent(nombre)}%0AEmpresa:%20${encodeURIComponent(empresa)}%0ACiudad:%20${encodeURIComponent(ciudad)}%0ATel:%20${encodeURIComponent(tel)}`;
-  window.open(`https://wa.me/584140000000?text=${msg}`, '_blank');
+  window.open(`https://wa.me/584148148570?text=${msg}`, '_blank');
 }
 
 /* ════════════════════════════════════════════
@@ -3718,7 +3734,7 @@ function showWhatsAppCTA() {
     ? parts.join(' | ')
     : chatHistory.filter(m => m.role === 'user').map(m => m.content).join(' | ');
 
-  const waUrl = `https://wa.me/584140000000?text=${encodeURIComponent('Hola! Fui asesorado por el chat IA de Piso Modular 3D.\n\n' + summary)}`;
+  const waUrl = `https://wa.me/584148148570?text=${encodeURIComponent('Hola! Fui asesorado por el chat IA de Piso Modular 3D.\n\n' + summary)}`;
   waWrap.innerHTML = `<a href="${waUrl}" target="_blank" class="btn btn-whatsapp" style="font-size:0.8rem; padding:10px 16px; display:inline-flex; align-items:center; gap:0.4em;"><svg viewBox="0 0 32 32" width="1.1em" height="1.1em" fill="currentColor" aria-hidden="true"><path d="M16.004 3C9.06 3 3.43 8.63 3.43 15.573c0 2.45.68 4.738 1.86 6.69L3 29l6.9-2.246a12.5 12.5 0 0 0 6.104 1.577h.005c6.943 0 12.573-5.63 12.573-12.573C28.582 8.816 22.947 3 16.004 3Zm0 22.86a10.22 10.22 0 0 1-5.213-1.43l-.374-.222-3.867 1.258 1.276-3.77-.244-.388a10.234 10.234 0 0 1-1.575-5.467c0-5.663 4.61-10.273 10.28-10.273 2.748 0 5.328 1.07 7.27 3.014a10.213 10.213 0 0 1 3.008 7.273c0 5.663-4.608 10.273-10.28 10.273Zm5.633-7.699c-.31-.155-1.83-.902-2.113-1.005-.283-.104-.489-.155-.696.155-.207.31-.798 1.005-.978 1.212-.18.207-.36.233-.669.078-.31-.155-1.307-.482-2.489-1.535-.92-.82-1.542-1.833-1.722-2.143-.18-.31-.02-.478.135-.632.14-.14.31-.362.465-.543.155-.181.207-.31.31-.517.104-.207.052-.388-.026-.543-.078-.155-.696-1.68-.954-2.302-.251-.604-.507-.522-.696-.532l-.593-.01c-.207 0-.543.078-.827.388-.284.31-1.084 1.06-1.084 2.583s1.11 2.997 1.264 3.204c.155.207 2.185 3.337 5.293 4.68.74.32 1.317.51 1.767.653.742.236 1.418.203 1.952.123.596-.089 1.83-.748 2.087-1.47.258-.723.258-1.343.181-1.47-.078-.129-.284-.207-.594-.362Z"/></svg> Continuar por WhatsApp</a>`;
   msgs.appendChild(waWrap);
   msgs.scrollTop = msgs.scrollHeight;
